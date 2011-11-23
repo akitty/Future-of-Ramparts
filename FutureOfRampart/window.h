@@ -8,4 +8,5 @@ class Window	  // output window related routines
     static void idleCallback(void);
     static void reshapeCallback(int, int);
     static void displayCallback(void);
+    static void setPerspective();
 };
