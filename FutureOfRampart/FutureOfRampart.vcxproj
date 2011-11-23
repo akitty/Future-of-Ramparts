@@ -68,7 +68,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Geode.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="SGGroup.cpp" />
@@ -83,6 +83,7 @@
     <ClInclude Include="SGGroup.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
