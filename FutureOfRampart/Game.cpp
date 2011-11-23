@@ -4,8 +4,8 @@
 
 using namespace std;
 
-int Window::width  = 512;   // set window width in pixels here
-int Window::height = 512;   // set window height in pixels here
+int Window::width  = 1024;   // set window width in pixels here
+int Window::height = 768;   // set window height in pixels here
 
 /**
  * Some keyboard routines to handle turning the spot and point lights
