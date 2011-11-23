@@ -4,17 +4,13 @@
 #include "SGGroup.h"
 #include "MatrixTransform.h"
 #include "Geode.h"
+#include "IsoCamera.h"
 
 using namespace std;
 
 #pragma region GAME_GLOBALS
-
-
 int Window::width  = 512;   // set window width in pixels here
 int Window::height = 512;   // set window height in pixels here
-
-
-
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
