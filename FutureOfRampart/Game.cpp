@@ -26,6 +26,8 @@ int Window::height = 512;   // set window height in pixels here
 void handleInput(unsigned char key, int, int)
 {
   //IsoCamera.handleInput(key);
+  //Player1.handleInput(key);
+  //Player2.handleInput(key);
 }
 
 #pragma endregion
