@@ -5,12 +5,17 @@
 #include "MatrixTransform.h"
 #include "Geode.h"
 #include "IsoCamera.h"
+#include "Map.h"
 
 using namespace std;
 
 #pragma region GAME_GLOBALS
 int Window::width  = 512;   // set window width in pixels here
 int Window::height = 512;   // set window height in pixels here
+Matrix4 worldMatrix; // The world matrix
+static IsoCamera camera(&worldMatrix); // The world camera
+SGGroup world;
+Map gameMap;
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
@@ -21,9 +26,19 @@ int Window::height = 512;   // set window height in pixels here
  */
 void handleInput(unsigned char key, int, int)
 {
-  //IsoCamera.handleInput(key);
+  camera.handleInput(key, 0, 0);
   //Player1.handleInput(key);
   //Player2.handleInput(key);
+}
+
+#pragma endregion
+
+#pragma region GAME_INIT
+
+/* initialize the scene graph for the game */
+void initializeMap()
+{
+  world.addChild(&gameMap);
 }
 
 #pragma endregion
@@ -75,10 +90,8 @@ void Window::displayCallback()
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  // DRAW EVERYTHING
-  glColor3f(0.0,1.0,0.0);
-  glScalef(10.0, 1.0, 10.0);
-  glutWireCube(1.0);
+  // game scene graph
+  world.draw(worldMatrix);
 
   glutSwapBuffers();
 }
@@ -104,6 +117,9 @@ int main(int argc, char *argv[])
 
   /* Set the keyboard event handler */
   glutKeyboardFunc(handleInput);
+
+  /* initialize the game map */
+  initializeMap();
 
   glutMainLoop();
   return 0;

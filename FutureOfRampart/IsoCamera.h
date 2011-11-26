@@ -17,12 +17,12 @@ class IsoCamera
 		IsoCamera(Matrix4* c) 
 		{
 			cam = c;
-			Matrix4 rotatePosY; rotatePosY.rotatey(90.0);		// rotates along y axis 90 degrees
-			Matrix4 rotateNegY; rotateNegY.rotatey(-90.0);		// rotates along y axis -90 degrees
-			Matrix4 xPosTran; xPosTran.translate(1.0,0.0,0.0);	// an x translation of 1
-			Matrix4 xNegTran; xNegTran.translate(-1.0,0.0,0.0); // an x translation of -1
-			Matrix4 zPosTran; zPosTran.translate(0.0,0.0,1.0);	// a z translation of 1
-			Matrix4 zNegTran; zNegTran.translate(0.0,0.0,-1.0);	// a z translation of -1
+			rotatePosY.rotatey(90.0);		// rotates along y axis 90 degrees
+			rotateNegY.rotatey(-90.0);		// rotates along y axis -90 degrees
+			xPosTran.translate(1.0,0.0,0.0);	// an x translation of 1
+			xNegTran.translate(-1.0,0.0,0.0); // an x translation of -1
+			zPosTran.translate(0.0,0.0,1.0);	// a z translation of 1
+			zNegTran.translate(0.0,0.0,-1.0);	// a z translation of -1
 		}
 
 		/**
@@ -95,8 +95,5 @@ class IsoCamera
 			else if(key == 'a') rotateViewCounter();
 			else { cout << "invalid key is pressed\n"; }
 		}
-
-
-
 };
 

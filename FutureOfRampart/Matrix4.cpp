@@ -9,9 +9,9 @@ Matrix4::Matrix4()
   {
     for (int j=0; j<4; ++j)
     {
+      m[i][j] = 0;
       if(i == j)
         m[i][j] = 1;
-      m[i][j] = 0;
     }
   }
 } 

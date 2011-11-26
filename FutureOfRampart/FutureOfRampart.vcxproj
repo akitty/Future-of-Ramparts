@@ -67,8 +67,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Geode.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="SGGroup.cpp" />
@@ -76,8 +78,10 @@
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Geode.h" />
     <ClInclude Include="IsoCamera.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="Node.h" />
