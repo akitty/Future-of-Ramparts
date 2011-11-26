@@ -4,9 +4,9 @@
 Map::Map()
 {
   // initialize all of the base blocks of this world
-  for(int i = 0; i < MAP_SIZE; ++i)
+  for(int i = 0; i < MAP_HEIGHT; ++i)
   {
-    for(int j = 0; j < MAP_SIZE; ++j)
+    for(int j = 0; j < MAP_WIDTH; ++j)
     {
       // set the blocks at the given position, 
       // and non-movable
@@ -17,12 +17,19 @@ Map::Map()
 
 void Map::draw(Matrix4 & m)
 {
-  for(int i = 0; i < MAP_SIZE; ++i)
+  glPushMatrix();
+
+  glMatrixMode(GL_MODELVIEW);
+  Matrix4 tf(m);
+  glLoadMatrixf(tf.getPointer());
+
+  for(int i = 0; i < MAP_HEIGHT; ++i)
   {
-    for(int j = 0; j < MAP_SIZE; ++j)
+    for(int j = 0; j < MAP_WIDTH; ++j)
     {
       // draw all of the blocks inside base
       base[i][j].draw(m);
+      glPopMatrix();
     }
   }
 }

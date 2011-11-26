@@ -5,7 +5,7 @@
 class IsoCamera
 {
 	public:
-		Matrix4* cam;
+		Matrix4 & cam;
 		Matrix4 rotatePosY;
 		Matrix4 rotateNegY;
 		Matrix4 xPosTran;
@@ -14,11 +14,10 @@ class IsoCamera
 		Matrix4 zNegTran;
 
 		IsoCamera(void);
-		IsoCamera(Matrix4* c) 
+		IsoCamera(Matrix4 & c) : cam(c)
 		{
-			cam = c;
-			rotatePosY.rotatey(90.0);		// rotates along y axis 90 degrees
-			rotateNegY.rotatey(-90.0);		// rotates along y axis -90 degrees
+			rotatePosY.rotatey(90.0f);		// rotates along y axis 90 degrees
+			rotateNegY.rotatey(-90.0f);		// rotates along y axis -90 degrees
 			xPosTran.translate(1.0,0.0,0.0);	// an x translation of 1
 			xNegTran.translate(-1.0,0.0,0.0); // an x translation of -1
 			zPosTran.translate(0.0,0.0,1.0);	// a z translation of 1
@@ -31,7 +30,7 @@ class IsoCamera
 		 */
 		inline void rotateView() 
 		{
-			cam->multiply(rotatePosY);
+			cam.multiply(rotatePosY);
 		}
 
 		/**
@@ -40,7 +39,7 @@ class IsoCamera
 		 */
 		inline void rotateViewCounter()
 		{
-			cam->multiply(rotateNegY);
+			cam.multiply(rotateNegY);
 		}
 
 		/**
@@ -49,7 +48,7 @@ class IsoCamera
 		 */
 		inline void translatePosX()
 		{
-			cam->multiply(xPosTran);
+			cam.multiply(xPosTran);
 		}
 
 		/**
@@ -58,7 +57,7 @@ class IsoCamera
 		 */
 		inline void translateNegX()
 		{
-			cam->multiply(xNegTran);
+			cam.multiply(xNegTran);
 		}
 
 		/**
@@ -67,7 +66,7 @@ class IsoCamera
 		 */
 		inline void translatePosZ()
 		{
-			cam->multiply(zPosTran);
+			cam.multiply(zPosTran);
 		}
 
 		/**
@@ -76,11 +75,12 @@ class IsoCamera
 		 */
 		inline void translateNegZ()
 		{
-			cam->multiply(zNegTran);
+			cam.multiply(zNegTran);
 		}
 
 		inline void handleInput(unsigned char key, int, int) 
 		{
+      cout << key << endl;
 			// x pos
 			if(key == 'RA') translatePosX();
 			// x neg
