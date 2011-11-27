@@ -48,6 +48,13 @@ float Vector3::operator[](int i) {
 	}
 }
 
+Vector3& Vector3::cross(Vector3& left, Vector3& right)
+{
+  Vector3 result;
+  cross(result, left, right);
+  return result;
+}
+
 void Vector3::cross(Vector3& a){
 	float xt,yt,zt;
 	xt=x;

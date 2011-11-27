@@ -53,6 +53,7 @@ public:
 	static float dot(Vector3&a,Vector3&b) { return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
 	void cross(Vector3&); 
 	static void cross(Vector3&,Vector3&,Vector3&);
+  static Vector3& cross(Vector3&, Vector3&);
 	float length();
 	void normalize() { scalar(1.0f/length()); }
 	void print();

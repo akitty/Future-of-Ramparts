@@ -9,9 +9,11 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67bcfb1c-a4ba-4aa8-83b0-9382285e1d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures">
+      <UniqueIdentifier>{f074b2f4-9218-40d5-8034-efd176d4f6ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +42,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imageloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,5 +88,64 @@
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="imageloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureNumbers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FutureOfRampart1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="map_top_p2.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_top_p1.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_top_base.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_right.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_left.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_front.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="map_back.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="block_top.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="block_right.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="block_left.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="block_front.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="block_back.bmp">
+      <Filter>Resources\Textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

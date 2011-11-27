@@ -5,6 +5,9 @@
 #include "MatrixTransform.h"
 #include "Geode.h"
 #include "IsoCamera.h"
+#include "TextureManager.h"
+#include "imageloader.h"
+#include "TextureNumbers.h"
 #include "Map.h"
 
 using namespace std;
@@ -15,7 +18,10 @@ int Window::height = 768;   // set window height in pixels here
 Matrix4 worldMatrix; // The world matrix
 IsoCamera camera(worldMatrix); // The world camera
 SGGroup world;
-Map gameMap;
+Map* gameMap;
+Block* testBlock;
+Image* textures[NUM_TEXTURES];
+GLuint textureNums[NUM_TEXTURES];
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
@@ -38,7 +44,36 @@ void handleInput(unsigned char key, int, int)
 /* initialize the scene graph for the game */
 void initializeMap()
 {
-  world.addChild(&gameMap);
+  gameMap = new Map(textureNums);
+  world.addChild(gameMap);
+}
+
+/* Load all of the assets associated with this game
+   and pass them where they need to go */
+void loadAssets()
+{
+  // load textures
+  textures[0] = loadBMP("map_top_base.bmp");
+  textures[1] = loadBMP("map_top_p1.bmp");
+  textures[2] = loadBMP("map_top_p2.bmp");
+  textures[3] = loadBMP("map_front.bmp");
+  textures[4] = loadBMP("map_back.bmp");
+  textures[5] = loadBMP("map_left.bmp");
+  textures[6] = loadBMP("map_right.bmp");
+  textures[7] = loadBMP("block_top.bmp");
+  textures[8] = loadBMP("block_front.bmp");
+  textures[9] = loadBMP("block_back.bmp");
+  textures[10] = loadBMP("block_left.bmp");
+  textures[11] = loadBMP("block_right.bmp");
+
+  // create space for all of the textures
+  glGenTextures(NUM_TEXTURES, textureNums);
+
+  for(int i = 0; i < NUM_TEXTURES; ++i)
+  {
+    // load each one in
+    TextureManager::loadTexture(textures[i], textureNums[i]);
+  }
 }
 
 #pragma endregion
@@ -66,6 +101,11 @@ void Window::setPerspective()
   gluLookAt(-20, 40, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
+void initializeCamera()
+{
+  camera.isometrize();
+}
+
 #pragma endregion
 
 #pragma region GAME_UPDATE
@@ -90,6 +130,7 @@ void Window::displayCallback()
   glLoadIdentity();
 
   // game scene graph
+  //glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
   world.draw(worldMatrix);
 
   glutSwapBuffers();
@@ -118,7 +159,9 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(handleInput);
 
   /* initialize the game map */
+  loadAssets();
   initializeMap();
+  initializeCamera();
 
   glutMainLoop();
   return 0;

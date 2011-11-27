@@ -12,12 +12,14 @@ class IsoCamera
 		Matrix4 xNegTran;
 		Matrix4 zPosTran;
 		Matrix4 zNegTran;
+    Matrix4 isometer;
 
 		IsoCamera(void);
 		IsoCamera(Matrix4 & c) : cam(c)
 		{
 			rotatePosY.rotatey(90.0f);		// rotates along y axis 90 degrees
 			rotateNegY.rotatey(-90.0f);		// rotates along y axis -90 degrees
+      isometer.rotatey(45.0f);
 			xPosTran.translate(1.0,0.0,0.0);	// an x translation of 1
 			xNegTran.translate(-1.0,0.0,0.0); // an x translation of -1
 			zPosTran.translate(0.0,0.0,1.0);	// a z translation of 1
@@ -41,6 +43,21 @@ class IsoCamera
 		{
 			cam.multiply(rotateNegY);
 		}
+
+    inline void isometrize()
+    {
+      cam.multiply(isometer);
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+      translateNegX();
+    }
 
 		/**
 		 * translatePosX translates the x position of the camera by 1 unit.
