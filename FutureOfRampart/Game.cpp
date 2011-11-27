@@ -10,8 +10,8 @@
 using namespace std;
 
 #pragma region GAME_GLOBALS
-int Window::width  = 512;   // set window width in pixels here
-int Window::height = 512;   // set window height in pixels here
+int Window::width  = 1024;   // set window width in pixels here
+int Window::height = 768;   // set window height in pixels here
 Matrix4 worldMatrix; // The world matrix
 IsoCamera camera(worldMatrix); // The world camera
 SGGroup world;
@@ -63,7 +63,7 @@ void Window::reshapeCallback(int w, int h)
 void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
-  gluLookAt(-20, 30, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  gluLookAt(-20, 40, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 #pragma endregion
@@ -88,16 +88,10 @@ void Window::displayCallback()
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  glMultMatrixf(worldMatrix.getPointer());
-  worldMatrix.print();
 
   // game scene graph
-  glScalef(10.0, 1.0, 10.0);
-  glColor3f(0.0,1.0,0.0);
-  glutSolidCube(1.0);
-  //world.draw(worldMatrix);
+  world.draw(worldMatrix);
 
-  cin.get();
   glutSwapBuffers();
 }
 

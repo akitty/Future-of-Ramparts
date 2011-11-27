@@ -82,17 +82,17 @@ class IsoCamera
 		{
       cout << key << endl;
 			// x pos
-			if(key == 'RA') translatePosX();
+			if(key == 'd') translatePosX();
 			// x neg
-			else if(key == 'LA') translateNegX();
+			else if(key == 'a') translateNegX();
 			// z pos
-			else if(key == 'DA') translatePosZ();
+			else if(key == 'w') translatePosZ();
 			// z neg
-			else if(key == 'UP') translateNegZ();
+			else if(key == 's') translateNegZ();
 			// rotate pos y
-			else if(key == 'd') rotateView();
+			else if(key == 'q') rotateView();
 			// rotate neg y
-			else if(key == 'a') rotateViewCounter();
+			else if(key == 'e') rotateViewCounter();
 			else { cout << "invalid key is pressed\n"; }
 		}
 };

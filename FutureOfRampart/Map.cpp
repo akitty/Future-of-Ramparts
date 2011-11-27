@@ -21,13 +21,14 @@ void Map::draw(Matrix4 & m)
 
   glMatrixMode(GL_MODELVIEW);
   Matrix4 tf(m);
-  glLoadMatrixf(tf.getPointer());
+  
 
   for(int i = 0; i < MAP_HEIGHT; ++i)
   {
     for(int j = 0; j < MAP_WIDTH; ++j)
     {
       // draw all of the blocks inside base
+      glLoadMatrixf(tf.getPointer());
       base[i][j].draw(m);
       glPopMatrix();
     }
