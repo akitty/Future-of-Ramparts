@@ -1,7 +1,7 @@
 #pragma once
 
 // the number of textures we'll use
-const int NUM_TEXTURES = 12;
+const int NUM_TEXTURES = 13;
 
 // map basic textures
 const int MAP_TOP_BASE = 0;
@@ -19,5 +19,7 @@ const int BLOCK_BACK = 9;
 const int BLOCK_LEFT = 10;
 const int BLOCK_RIGHT = 11;
 
-// misc textures
+const int NUM_MISC_TEXTURES = 1;
 
+// misc textures
+const int CIRCLE_COMB = 12;
