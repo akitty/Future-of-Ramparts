@@ -3,7 +3,6 @@
 void TextureManager::subTexture(GLuint textureId)
 {
   glBindTexture(GL_TEXTURE_2D, textureId);
-  //glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGB, GL_UNSIGNED_BYTE, img->pixels);
 }
 
 void TextureManager::loadTexture(Image* image, GLuint textureId)

@@ -98,7 +98,7 @@ void Window::reshapeCallback(int w, int h)
 void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
-  gluLookAt(-20, 40, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  gluLookAt(0, 50, 30, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 void initializeCamera()

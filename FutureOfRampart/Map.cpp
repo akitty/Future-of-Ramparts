@@ -5,13 +5,48 @@
 Map::Map(GLuint textureNums[])
 {
   // initialize all of the base blocks of this world
-  for(int i = 0; i < MAP_HEIGHT; ++i)
+  for(int i = 0; i < MAP_HEIGHT / 2; ++i)
   {
-    for(int j = 0; j < MAP_WIDTH; ++j)
+    for(int j = 0; j < MAP_WIDTH / 2; ++j)
+    {
+      // QUADRANT 1 (i, j)
+      base[i][j] = Block(Vector3(i, 0, j),
+                         textureNums[MAP_TOP_BASE],
+                         textureNums[MAP_FRONT],
+                         textureNums[MAP_BACK],
+                         textureNums[MAP_LEFT],
+                         textureNums[MAP_RIGHT],
+                         textureNums[MAP_TOP_BASE],
+                         false);
+      // QUADRANT 2 (-i, j)
+      base[i + MAP_HEIGHT / 2][j] = Block(Vector3(-i, 0, j),
+                         textureNums[MAP_TOP_BASE],
+                         textureNums[MAP_FRONT],
+                         textureNums[MAP_BACK],
+                         textureNums[MAP_LEFT],
+                         textureNums[MAP_RIGHT],
+                         textureNums[MAP_TOP_BASE],
+                         false);
+    }
+  }
+
+  for(int i = 0; i < MAP_HEIGHT / 2; ++i)
+  {
+    for(int j = 0; j < MAP_WIDTH / 2; ++j)
     {
       // set the blocks at the given position, 
       // and non-movable
-      base[i][j] = Block(Vector3(i, 0, j),
+      // QUADRANT 3 (-i, -j)
+      base[i + MAP_HEIGHT / 2][j + MAP_WIDTH / 2] = Block(Vector3(-i, 0, -j),
+                         textureNums[MAP_TOP_BASE],
+                         textureNums[MAP_FRONT],
+                         textureNums[MAP_BACK],
+                         textureNums[MAP_LEFT],
+                         textureNums[MAP_RIGHT],
+                         textureNums[MAP_TOP_BASE],
+                         false);
+      // QUADRANT 4 (i, -j)
+      base[i][j + MAP_WIDTH / 2] = Block(Vector3(i, 0, -j),
                          textureNums[MAP_TOP_BASE],
                          textureNums[MAP_FRONT],
                          textureNums[MAP_BACK],

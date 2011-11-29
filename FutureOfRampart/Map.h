@@ -3,8 +3,8 @@
 #include "SGGroup.h"
 #include "Block.h"
 
-const int MAP_WIDTH = 14;
-const int MAP_HEIGHT = 24;
+const int MAP_WIDTH = 20;
+const int MAP_HEIGHT = 48;
 
 /**
  * The map containing the base world, each player's

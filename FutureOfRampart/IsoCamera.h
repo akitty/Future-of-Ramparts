@@ -47,16 +47,6 @@ class IsoCamera
     inline void isometrize()
     {
       cam.multiply(isometer);
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
-      translateNegX();
     }
 
 		/**
