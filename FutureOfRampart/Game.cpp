@@ -8,7 +8,9 @@
 #include "TextureManager.h"
 #include "imageloader.h"
 #include "TextureNumbers.h"
+#include "ParticleEngine.h"
 #include "Map.h"
+#include <ctime>
 
 using namespace std;
 
@@ -22,6 +24,14 @@ Map* gameMap;
 Block* testBlock;
 Image* textures[NUM_TEXTURES];
 GLuint textureNums[NUM_TEXTURES];
+ParticleEngine* explosion;
+bool isExploding = false;
+#pragma endregion
+
+#pragma region GAME_PROTOTYPES
+
+void update(int value);
+
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
@@ -35,6 +45,11 @@ void handleInput(unsigned char key, int, int)
   camera.handleInput(key, 0, 0);
   //Player1.handleInput(key);
   //Player2.handleInput(key);
+  if(key == 'e')
+  {
+    isExploding = true;
+    glutTimerFunc(TIMER_MS, update, 0);
+  }
 }
 
 #pragma endregion
@@ -69,11 +84,25 @@ void loadAssets()
   // create space for all of the textures
   glGenTextures(NUM_TEXTURES, textureNums);
 
-  for(int i = 0; i < NUM_TEXTURES; ++i)
+  for(int i = 0; i < NUM_TEXTURES - NUM_MISC_TEXTURES; ++i)
   {
     // load each one in
     TextureManager::loadTexture(textures[i], textureNums[i]);
   }
+
+  // BEGIN LOADING MISCELLANEOUS TEXTURES
+  Image* image = loadBMP("circle.bmp");
+	Image* alphaChannel = loadBMP("circlealpha.bmp");
+
+	textureNums[NUM_TEXTURES - 1] = TextureManager::loadAlphaTexture(image, alphaChannel);
+	delete image;
+	delete alphaChannel;
+}
+
+void initializeExplosion()
+{
+  explosion = new ParticleEngine(Vector3(2.0,2.0,2.0), 100, CIRCLE_COMB, 20, BLOCK_SIZE);
+  explosion->initialize();
 }
 
 #pragma endregion
@@ -118,6 +147,23 @@ void Window::idleCallback()
   Window::displayCallback();
 }
 
+/*
+ * particles will fade out in proportion with duration.
+ * particle velocity and movement updating should be scaled to the bounding
+ * radius.
+ * we want to also subtract the gravity constraint each time to the 
+ * particles' trajectory so that it eventually falls.
+ */
+void update(int value)
+{
+  /* timer processing */
+  explosion->advance(TIMER_MS / 1000.0f);
+	glutPostRedisplay();
+
+  /* recall update after specified milliseconds have passed */
+  glutTimerFunc(TIMER_MS, update, 0);
+}
+
 #pragma endregion
 
 #pragma region GAME_DRAW
@@ -142,13 +188,19 @@ void Window::displayCallback()
 
 int main(int argc, char *argv[])
 {
-  glutInit(&argc, argv);      	      	  // initialize GLUT
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); // open an OpenGL context with double buffering, RGB colors, and depth buffering
-  glutInitWindowSize(Window::width, Window::height);      // set initial window size
-  glutCreateWindow("Future of Rampart");  // open window and set window title
+  srand((unsigned int)time(0)); //Seed the random number generator
+
+  glutInit(&argc, argv);      	      	  
+  // open an OpenGL context with double buffering, RGB colors, and depth buffering
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
+  glutInitWindowSize(Window::width, Window::height);      
+  glutCreateWindow("Future of Rampart");  
 
   glEnable(GL_DEPTH_TEST);                // enable depth buffering
-  glClearColor(0.0, 0.0, 0.0, 1.0);   	  // set clear color to black
+  glClearColor(0.3, 0.5, 1.0, 1.0);   	  // set clear color to black
+	glEnable(GL_BLEND);
+	glEnable(GL_COLOR_MATERIAL);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   
   // Install callback functions:
   glutDisplayFunc(Window::displayCallback);
@@ -162,6 +214,7 @@ int main(int argc, char *argv[])
   loadAssets();
   initializeMap();
   initializeCamera();
+  initializeExplosion();
 
   glutMainLoop();
   return 0;
