@@ -9,143 +9,114 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{67bcfb1c-a4ba-4aa8-83b0-9382285e1d0e}</UniqueIdentifier>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{eb9f547a-9173-40a7-8958-728ec8cf6e49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Textures">
-      <UniqueIdentifier>{f074b2f4-9218-40d5-8034-efd176d4f6ba}</UniqueIdentifier>
+    <Filter Include="Source Files\GraphicsApi">
+      <UniqueIdentifier>{19cda78c-262b-4b19-86f3-232d48a02a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GraphicsApi">
+      <UniqueIdentifier>{ec9c9854-79ff-483a-ab3e-51cc3ed29bdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Graph">
+      <UniqueIdentifier>{8515d38a-6dfa-4877-a1e6-d852316383d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{cc217853-796a-4f32-bd0c-215276366cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Graph">
+      <UniqueIdentifier>{269530e4-2030-4957-9fe5-8cf4ca39a551}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Matrix4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Geode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MatrixTransform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SGGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="imageloader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source Files\GraphicsApi</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>Source Files\GraphicsApi</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4.cpp">
+      <Filter>Source Files\GraphicsApi</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Geode.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixTransform.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="SGGroup.cpp">
+      <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Geode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MatrixTransform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SGGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IsoCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Header Files\GraphicsApi</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Vector4.h">
+      <Filter>Header Files\GraphicsApi</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\GraphicsApi</Filter>
     </ClInclude>
-    <ClInclude Include="imageloader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureNumbers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource1.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SGGroup.h">
+      <Filter>Header Files\Scene Graph</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixTransform.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Geode.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="imageloader.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureNumbers.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="FutureOfRampart1.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="map_top_p2.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_top_p1.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_top_base.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_right.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_left.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_front.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="map_back.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="block_top.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="block_right.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="block_left.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="block_front.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="block_back.bmp">
-      <Filter>Resources\Textures</Filter>
-    </None>
   </ItemGroup>
 </Project>

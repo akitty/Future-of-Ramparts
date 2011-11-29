@@ -74,6 +74,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
+    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SGGroup.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -89,32 +90,14 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="SGGroup.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TextureNumbers.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="FutureOfRampart1.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="block_back.bmp" />
-    <None Include="block_front.bmp" />
-    <None Include="block_left.bmp" />
-    <None Include="block_right.bmp" />
-    <None Include="block_top.bmp" />
-    <None Include="map_back.bmp" />
-    <None Include="map_front.bmp" />
-    <None Include="map_left.bmp" />
-    <None Include="map_right.bmp" />
-    <None Include="map_top_base.bmp" />
-    <None Include="map_top_p1.bmp" />
-    <None Include="map_top_p2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
