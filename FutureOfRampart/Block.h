@@ -5,6 +5,7 @@
 
 // the standard cube size throughout the game
 const float BLOCK_SIZE = 4.0f;
+
 // the height in which the block resides when it's
 // waiting to be placed
 const float PLACE_HEIGHT = 2.0f;
@@ -29,6 +30,9 @@ class Block : public Geode
   public:
     // position of this cube in the game
     Vector3 position;
+	// position of the center in the cube 
+	// for collission detection
+	Vector3 center;
     // whether or not this block is still movable
     bool movable;
     // adjacency list for this block

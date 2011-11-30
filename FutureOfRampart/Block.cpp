@@ -7,6 +7,7 @@ using namespace std;
 Block::Block()
 {
   position = Vector3(0.0, 0.0, 0.0);
+  center = Vector3(2.0, 2.0, -2.0);
   movable = false;
   isTextured = false;
   generate();
@@ -17,6 +18,7 @@ Block::Block(const Vector3 & pos)
   movable = false;
   isTextured = false;
   position = Vector3(pos.x, pos.y, pos.z);
+  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
   generate();
 }
 
@@ -25,6 +27,7 @@ Block::Block(const Vector3 & pos, bool canBePlaced)
   movable = canBePlaced;
   isTextured = false;
   position = Vector3(pos.x, pos.y, pos.z);
+  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
   generate();
 }
 
@@ -33,6 +36,7 @@ Block::Block(const Vector3 & pos, GLuint top, GLuint front, GLuint back,
 {
   movable = canBePlaced;
   position = Vector3(pos.x, pos.y, pos.z);
+  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
        
   faceTextures[BACKFACE]    = back;
   faceTextures[BOTTOMFACE]  = bottom;
@@ -79,6 +83,7 @@ bool Block::touches(Vector3 & otherPos)
 void Block::place()
 {
   position.y -= PLACE_HEIGHT;
+  center.y -= PLACE_HEIGHT;
   movable = false;
 }
 
@@ -86,24 +91,28 @@ void Block::moveUp()
 {
   if(movable)
     position.z -= BLOCK_SIZE;
+    center.z -= BLOCK_SIZE;
 }
 
 void Block::moveDown()
 {
   if(movable)
     position.z += BLOCK_SIZE;
+    center.z += BLOCK_SIZE;
 }
 
 void Block::moveLeft()
 {
   if(movable)
     position.x -= BLOCK_SIZE;
+    center.x -= BLOCK_SIZE;
 }
 
 void Block::moveRight()
 {
   if(movable)
     position.x += BLOCK_SIZE;
+    center.x += BLOCK_SIZE;
 }
 
 /* swap the top face with the new one */

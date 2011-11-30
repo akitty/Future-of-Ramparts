@@ -100,7 +100,6 @@ class IsoCamera
 			else if(key == 'q') rotateView();
 			// rotate neg y
 			else if(key == 'e') rotateViewCounter();
-			else { cout << "invalid key is pressed\n"; }
 		}
 };
 
