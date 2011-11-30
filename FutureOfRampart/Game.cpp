@@ -15,6 +15,7 @@
 using namespace std;
 
 #pragma region GAME_GLOBALS
+
 int Window::width  = 1024;   // set window width in pixels here
 int Window::height = 768;   // set window height in pixels here
 Matrix4 worldMatrix; // The world matrix
@@ -26,11 +27,24 @@ Image* textures[NUM_TEXTURES];
 GLuint textureNums[NUM_TEXTURES];
 ParticleEngine* explosion;
 bool isExploding = false;
+
+/* James test code */
+/*********************/
+bool intersect = false;
+Matrix4 m;
+MatrixTransform mat;
+Sphere s = Sphere(Vector3(1.0, 20, 20), Vector3(1.0, 1.0, 1.0), Vector3(-10.0, 0, 0), Vector3(.01, .072, 0));
+Block b;
+const float gravity = -.0001;
+bool stop = false;
+/*********************/
+
 #pragma endregion
 
 #pragma region GAME_PROTOTYPES
 
 void update(int value);
+bool collidesWith(Sphere s, Block b, bool test);
 
 #pragma endregion
 
@@ -50,6 +64,21 @@ void handleInput(unsigned char key, int, int)
     isExploding = true;
     glutTimerFunc(TIMER_MS, update, 0);
   }
+  /* James test code */
+  /*********************/
+  if(key == 'r')
+  {
+	  intersect = false;
+	  s.Velocity.set(.01, .072, 0);
+	  stop = false;
+	  s.Center.set(-10, 0, 0);
+  }
+  if(key == 'c')
+  {
+	  stop = true;
+	  s.Velocity.set(0,0,0);
+  }
+  /*********************/
 }
 
 #pragma endregion
@@ -61,6 +90,15 @@ void initializeMap()
 {
   gameMap = new Map(textureNums);
   world.addChild(gameMap);
+
+  /* James test code */
+  /*********************/
+  m.translate(s.Center); 
+  mat.setTransformation(m);
+  world.addChild(&mat);
+  world.addChild(&b);
+  mat.addChild(&s);
+  /*********************/
 }
 
 /* Load all of the assets associated with this game
@@ -128,6 +166,7 @@ void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
   gluLookAt(0, 50, 30, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
 }
 
 void initializeCamera()
@@ -143,9 +182,28 @@ void initializeCamera()
 void Window::idleCallback()
 {
   // UPDATE - HANDLE GAME LOGIC HERE BEFORE CALLING DRAW AGAIN
+/* James test code */
+/*********************/
+ if(s.collidesWithBlock(b, false)) {
+	  if (!intersect) {
+		  cout << "interesection! \n";
+		  intersect = true;
+		  s.collidesWithBlock(b, true);
+		  
+	  }
+  }
+
+  if(!stop) cout << s.Center << "\n";
+
+  m.translate(s.Center);
+  mat.setTransformation(m);
+  s.Velocity.set(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
+  s.Center = s.Center + s.Velocity;
+/*********************/
 
   Window::displayCallback();
 }
+
 
 /*
  * particles will fade out in proportion with duration.
