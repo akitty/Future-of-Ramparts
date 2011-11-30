@@ -60,6 +60,8 @@ void ParticleEngine::step()
     
     if(p->timeAlive > p->timespan)
       particles.pop_back();
+
+   // delete p;
   }
 
   if(!areParticles)
@@ -69,16 +71,16 @@ void ParticleEngine::step()
 void ParticleEngine::advance(float dt)
 {
   while (dt > 0) {
-				if (timeUntilNextStep < dt) {
-					dt -= timeUntilNextStep;
-					step();
-					timeUntilNextStep = STEP_TIME;
-				}
-				else {
-					timeUntilNextStep -= dt;
-					dt = 0;
-				}
-			}
+		if (timeUntilNextStep < dt) {
+			dt -= timeUntilNextStep;
+			step();
+			timeUntilNextStep = STEP_TIME;
+		}
+		else {
+			timeUntilNextStep -= dt;
+			dt = 0;
+		}
+	}
 }
 
 void ParticleEngine::draw()

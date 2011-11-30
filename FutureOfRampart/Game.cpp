@@ -45,7 +45,7 @@ void handleInput(unsigned char key, int, int)
   camera.handleInput(key, 0, 0);
   //Player1.handleInput(key);
   //Player2.handleInput(key);
-  if(key == 'e')
+  if(key == 'k')
   {
     isExploding = true;
     glutTimerFunc(TIMER_MS, update, 0);
