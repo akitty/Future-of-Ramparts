@@ -22,4 +22,4 @@ const int BLOCK_RIGHT = 11;
 const int NUM_MISC_TEXTURES = 1;
 
 // misc textures
-const int CIRCLE_COMB = 12;
+const int EXPLOSION = 12;

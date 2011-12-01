@@ -65,11 +65,11 @@
     <ClCompile Include="SGGroup.cpp">
       <Filter>Source Files\Scene Graph</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files\Scene Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,11 +118,11 @@
     <ClInclude Include="TextureNumbers.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

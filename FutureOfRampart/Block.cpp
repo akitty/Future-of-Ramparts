@@ -31,6 +31,8 @@ Block::Block(const Vector3 & pos, bool canBePlaced)
   generate();
 }
 
+/* create the textured block at the specified position with the 
+ * specified boolean for whether or not it can be placed */
 Block::Block(const Vector3 & pos, GLuint top, GLuint front, GLuint back,
              GLuint left, GLuint right, GLuint bottom, bool canBePlaced)
 {
@@ -169,16 +171,6 @@ void Block::generate()
   vertices[FRONTFACE][2] = Vector3(BLOCK_SIZE, BLOCK_SIZE, 0.0);
   vertices[FRONTFACE][3] = Vector3(0.0, BLOCK_SIZE, 0.0);
   normals[FRONTFACE] = Vector3::cross((vertices[5][1] - vertices[5][0]), (vertices[5][3] - vertices[5][0]));
-
-  //DEBUG
-  //Vector3(0.0, 0.0, 0.0); // 0
-  //Vector3(BLOCK_SIZE, 0.0, 0.0); // 1
-  //Vector3(0.0, BLOCK_SIZE, 0.0); // 2
-  //Vector3(BLOCK_SIZE, BLOCK_SIZE, 0.0); // 3
-  //Vector3(0.0, 0.0, -BLOCK_SIZE); // 4
-  //Vector3(BLOCK_SIZE, 0.0, -BLOCK_SIZE); // 5
-  //Vector3(0.0, BLOCK_SIZE, -BLOCK_SIZE); // 6
-  //Vector3(BLOCK_SIZE, BLOCK_SIZE, -BLOCK_SIZE); // 7
 }
 
 /* draw one face at a time and texture in as needed */
@@ -189,6 +181,7 @@ void Block::render()
     // move the block to its relative position
     glTranslatef(position.x, position.y, position.z);
 
+    // texture this block if it has been enabled
     if(isTextured) glEnable(GL_TEXTURE_2D);
 
     // for each face

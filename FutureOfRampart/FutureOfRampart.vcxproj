@@ -75,7 +75,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
-    <ClCompile Include="ParticleEngine.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SGGroup.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -92,7 +92,7 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="ParticleEngine.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SGGroup.h" />
     <ClInclude Include="Sphere.h" />

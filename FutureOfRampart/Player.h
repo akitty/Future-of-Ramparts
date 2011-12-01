@@ -1,8 +1,10 @@
 #pragma once
 #include "Block.h"
+#include "Geode.h"
+#include "Explosion.h"
 
 
-class Player
+class Player : public Geode
 {
   public:
     // player bounds
@@ -10,9 +12,15 @@ class Player
     // the current block for the player to place
     Block* currentBlock;
     // the starting position
-    Vector3 startPos;
+    Vector3 origin;
+    vector<Block*> blocks;
+    vector<Explosion*> explosions;
 
-    Player();
+    Player(Vector3 o) : origin(o){}
     ~Player();
+
+    void render();
+
+    void detonate();
 };
 
