@@ -204,6 +204,5 @@ void Block::render()
         glVertex3f(vertices[i][3].x, vertices[i][3].y, vertices[i][3].z);
       glEnd();
     }
-
   glPopMatrix();
 }

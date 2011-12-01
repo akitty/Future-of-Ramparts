@@ -18,6 +18,10 @@ using namespace std;
 // The frames per second we'll use for this game
 const float FPS = 10; // 50 fps
 
+/* fps related stuff */
+static int frames = 0;
+static float totalfps = 0.0f;
+
 // set window width in pixels here
 int Window::width  = 1024;   
 // set window height in pixels here
@@ -40,6 +44,7 @@ GLuint textureNums[NUM_TEXTURES];
 Explosion* explosion;
 // whether or not the engine is exploding
 bool isExploding = false;
+Vector3 eye;
 
 /* James test code */
 /*********************/
@@ -104,7 +109,7 @@ void handleInput(unsigned char key, int, int)
 void initializeMap()
 {
   gameMap = new Map(textureNums);
-  //world.addChild(gameMap);
+  world.addChild(gameMap);
 
   /* James test code */
   /*********************/
@@ -177,8 +182,9 @@ void Window::reshapeCallback(int w, int h)
 void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
-  gluLookAt(0, 50, 30, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
+  eye.x = 0.0f;
+  eye.y = 50.0f;
+  eye.z = 30.0f; 
 }
 
 void initializeCamera()
@@ -215,7 +221,7 @@ void Window::idleCallback()
 /*********************/
   
 
-  Window::displayCallback();
+  glutPostRedisplay();
 }
 
 #pragma endregion
@@ -226,10 +232,18 @@ void Window::displayCallback()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // rotate camera
+  worldMatrix.multiply(eye);
+  // set the new look-at point
+  gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
+  clock_t before = clock();
+
   // game scene graph
+  worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
@@ -243,6 +257,22 @@ void Window::displayCallback()
   }
 
   glutSwapBuffers();
+
+    clock_t after = clock();
+
+  totalfps += 1.0f / ((float)(after - before) / CLOCKS_PER_SEC);
+    
+  frames++;
+
+  if(frames == 25)
+  {
+    float fps = totalfps / 25.0;
+
+    cout << "FPS: " << fps << endl;
+
+    totalfps = 0.0f;
+    frames = 0;
+  }
 }
 
 #pragma endregion

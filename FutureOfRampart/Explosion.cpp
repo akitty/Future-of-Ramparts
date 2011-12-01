@@ -4,7 +4,7 @@
 const float PI = 3.1415926535f;
 // The number of milliseconds to which the timer is set
 const int   FPS = 2; 
-const float GRAVITY = 0.00017;
+const float GRAVITY = 0.0002;
 
 float randomFloat() {
 	return (float)rand() / ((float)RAND_MAX + 1);
@@ -21,10 +21,6 @@ cout << "NUM PARTICLES " << NUM_PARTICLES << endl;
 
   for(int i = 0; i < NUM_PARTICLES; ++i)
   {
-    //float negX = i%2 == 0 ? -1 : 1;
-    //float negX = i&xMask == 0 ? 1 : -1;
-    //float negZ = i%2 == 0 ? -1 : 1;
-    //float negZ = i&yMask == 0 ? 1 : -1;
     float negX = 0;
     float negZ = 0;
 
@@ -35,11 +31,8 @@ cout << "NUM PARTICLES " << NUM_PARTICLES << endl;
       case 3 : negX=-1; negZ=-1; break;
     }
     particles.at(i)->velocity.x = negX*randomFloat();
-//cout << "rand velocity X" << particles.at(i)->velocity.x << endl;
-    particles.at(i)->velocity.y = randomFloat() + randomFloat();
-//cout << "rand velocity Y" << particles.at(i)->velocity.y << endl;
+    particles.at(i)->velocity.y = randomFloat();
     particles.at(i)->velocity.z = negZ*randomFloat();
-//cout << "rand velocity Z" << particles.at(i)->velocity.z << endl;
     particles.at(i)->timeAlive = 0;
     particles.at(i)->pos = origin;
   }
@@ -83,7 +76,7 @@ void Explosion::step()
     {
       particles[i]->pos.x += (particles[i]->velocity.x * STEP_TIME) / NUM_FRAMES;
       particles[i]->pos.y -= GRAVITY;
-      particles[i]->pos.y += (particles[i]->velocity.y * STEP_TIME)*2 / NUM_FRAMES;
+      particles[i]->pos.y += (particles[i]->velocity.y * STEP_TIME)*5 / NUM_FRAMES;
       particles[i]->pos.z += (particles[i]->velocity.z * STEP_TIME) / NUM_FRAMES;
     }
   }
@@ -109,8 +102,6 @@ void Explosion::render()
 {
     frame++;
     advance(FPS);
-//cout << "FRAME IS " << frame << endl;
-//cout << "TIME ALIVE IS " << timeAlive << endl;
     
     if(timeAlive < DURATION)
     {
@@ -124,11 +115,8 @@ void Explosion::render()
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
       
-      //glColor3f(0.0, 0.0, 0.0);
       drawShockwave(timeAlive / DURATION, 50);
       float cd = 1 - (timeAlive / DURATION);
-
-      glPushMatrix();
 
 		  glBegin(GL_QUADS);
 		    for(int i = 0; i < particles.size(); i++) 
@@ -137,36 +125,18 @@ void Explosion::render()
 
           float blend = p->timeAlive / DURATION;
           if(blend > 1.0f) blend = 1.0f;
-
-//cout << "BLEND " << blend << endl;
           
-			    glColor4f(1.0, 1.0, 1.0, 1);
+			    glColor4f(1.0, 1.0, 1.0, 1 - blend);
 
 			    float size = PARTICLE_SIZE / 2;
           Vector3 pos = p->pos;
 
-          glTranslatef(-pos.x, -pos.y, -pos.z);
-          glRotatef(1/cd * 360, 0.0f, 0.0f, 1.0f);
-
-          // create points to draw with texture
           Vector3 bl = Vector3(pos[0] - size*cd, pos[1] - size*cd, pos[2]);
           Vector3 br = Vector3(pos[0] - size*cd, pos[1] + size*cd, pos[2]);
           Vector3 tr = Vector3(pos[0] + size*cd, pos[1] + size*cd, pos[2]);
           Vector3 tl = Vector3(pos[0] + size*cd, pos[1] - size*cd, pos[2]);
-
-          // want a slow rotation of each point
-          float ang = cd * 3.0f;
-          float cosA = cos ( ang );
-          float sinA = sin ( ang );
-			    
-          // rotate each point
-          //bl = Vector3(bl.x*cosA - bl.y*sinA, bl.x*sinA + bl.y*cosA, bl.z);
-          //tr = Vector3(tr.x*cosA - tr.y*sinA, tr.x*sinA + tr.y*cosA, tr.z);
-          //br = Vector3(br.x*cosA - br.y*sinA, br.x*sinA + br.y*cosA, br.z);
-          //tl = Vector3(tl.x*cosA - tl.y*sinA, tl.x*sinA + tl.y*cosA, tl.z);
 				
 			    glTexCoord2f(0, 0);
-//cout << "PARTICLE " << i << " " << pos[0] << " " << pos[1] << " " << pos[2] << endl;
 			    glVertex3f(bl.x, bl.y, bl.z);
 			    glTexCoord2f(0, 1);
 			    glVertex3f(br.x, br.y, br.z);
@@ -174,15 +144,10 @@ void Explosion::render()
 			    glVertex3f(tr.x, tr.y, tr.z);
 			    glTexCoord2f(1, 0);
 			    glVertex3f(tl.x, tl.y, tl.z);
-
-
-          glTranslatef(pos.x, pos.y, pos.z);
 		    }
 		  glEnd();
       glDisable(GL_TEXTURE_2D);
       glDisable(GL_BLEND);
-
-      glPopMatrix();
     }
     else end();
 }
