@@ -41,7 +41,7 @@ void Player::handleInputs(char key)
 	{
 		if(currentBlock != NULL)
 		{
-			if(currC + 1 <= maxC)
+			if(currC + 1 < columns)
 			{
 				currentBlock->moveUp();
 				currPos.z -= BLOCK_SIZE;
@@ -53,7 +53,7 @@ void Player::handleInputs(char key)
 	{
 		if(currentBlock != NULL)
 		{
-			if(currR - 1 >= minR)
+			if(currR - 1 >= 0)
 			{
 				currentBlock->moveLeft();
 				currPos.x -= BLOCK_SIZE;
@@ -65,7 +65,7 @@ void Player::handleInputs(char key)
 	{
 		if(currentBlock != NULL)
 		{
-			if(currC - 1 >= minC)
+			if(currC - 1 >= 0)
 			{
 				currentBlock->moveDown();
 				currPos.z += BLOCK_SIZE;
@@ -77,7 +77,7 @@ void Player::handleInputs(char key)
 	{
 		if(currentBlock != NULL)
 		{
-			if(currR + 1 <= maxR)
+			if(currR + 1 < rows)
 			{
 				currentBlock->moveRight();
 				currPos.x += BLOCK_SIZE;

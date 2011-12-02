@@ -38,6 +38,8 @@ class Player : public Geode
 	int currR, currC;
 	// maximum bounds in the form of integers
 	int minR, maxR, minC, maxC;
+	// negative offset for our currR and currC
+	int negX, negZ;
 
 	/* 
 	 * Initialize this player. 
@@ -54,18 +56,17 @@ class Player : public Geode
 
 		// create the dimensions of the region
 		rows = ((maxX - minX) / BLOCK_SIZE);
-		cout << "ROWS: " << rows << endl;
-		minR = minX / BLOCK_SIZE;
-		cout << "MINIMUM ROW: " << minR << endl;
-		maxR = maxX / BLOCK_SIZE;
-		cout << "MAXIMUM ROW: " << maxR << endl;
-		minC = minZ / BLOCK_SIZE;
-		cout << "MINIMUM COLUMN "  << minC << endl;
-		maxC = maxZ / BLOCK_SIZE;
-		cout << "MAXIMUM COLUMN " << maxC << endl;
 		columns = ((maxZ - minZ) / BLOCK_SIZE);
-		cout << "COLUMNS: " << columns << endl;
+		
+		// should not actually be shrinking these....
 		spaces = rows * columns;
+		
+		cout << "ROWS: " << rows << endl;
+		cout << "MINIMUM ROW: " << minR << endl;
+		cout << "MAXIMUM ROW: " << maxR << endl;
+		cout << "MINIMUM COLUMN "  << minC << endl;
+		cout << "MAXIMUM COLUMN " << maxC << endl;
+		cout << "COLUMNS: " << columns << endl;
 
 		// initialize the region's dimensions
 		region = new Geode**[rows];
@@ -89,12 +90,16 @@ class Player : public Geode
 		// we want to calculate and place the fortress at the center location
 
 		// start the position for the first block to be given at
-		center = Vector3(rows - centerXoffset, columns - centerZoffset, BLOCK_SIZE);
+		// needs to be the minimum values of x and z (actual) + the offset in each direction
+		center = Vector3(minX + BLOCK_SIZE * centerXoffset, 
+						 BLOCK_SIZE, 
+						 minZ + BLOCK_SIZE * centerZoffset);
 
 		currPos = Vector3(center.x, center.y + BLOCK_SIZE, center.z);
 
-		currR = rows - centerXoffset;
-		currC = columns - centerZoffset;
+		// the current position just needs to be that offset
+		currR = centerXoffset;
+		currC = centerZoffset;
 	}
 
 	/* 

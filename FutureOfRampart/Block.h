@@ -4,7 +4,7 @@
 #include <gl\glut.h>
 
 // the standard cube size throughout the game
-const float BLOCK_SIZE = 4.0f;
+const float BLOCK_SIZE = 2.0f;
 
 // the height in which the block resides when it's
 // waiting to be placed

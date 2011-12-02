@@ -249,6 +249,14 @@ void Window::idleCallback()
   glutPostRedisplay();
 }
 
+/* 
+ * Update the positions of the projectiles and such.
+ */
+void update(int value)
+{
+
+}
+
 #pragma endregion
 
 #pragma region GAME_DRAW
@@ -292,7 +300,7 @@ void Window::displayCallback()
   {
     float fps = totalfps / 25.0;
 
-    //cout << "FPS: " << fps << endl;
+    cout << "FPS: " << fps << endl;
 
     totalfps = 0.0f;
     frames = 0;
@@ -329,6 +337,7 @@ int main(int argc, char *argv[])
   loadAssets();
   initializeMap();
   initializeCamera();
+  glutTimerFunc(FPS, update, 0);
 
   glutMainLoop();
   return 0;
