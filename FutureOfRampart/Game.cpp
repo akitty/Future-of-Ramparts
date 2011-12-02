@@ -324,10 +324,9 @@ void Window::idleCallback()
  */
 void update(int value)
 {
-	if(fire) updateBezierPosition(s);
 	if(s.collidesWithBlock(b, false)) {
 	  if (!intersect) {
-		  cout << "interesection! \n";
+		  cout << "interesection! collision at point number " << s.position << ": " << s.bezier_points[0][s.position] << "\n";
 		  intersect = true;
 		  s.collidesWithBlock(b, true);
 		  
@@ -341,6 +340,7 @@ void update(int value)
 		  
 	  }
   } 
+	if(fire) updateBezierPosition(s);
 	glutTimerFunc(FPS, update, 0);
 }
 
