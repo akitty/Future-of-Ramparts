@@ -5,6 +5,12 @@ Sphere::Sphere(Vector3 & center)
   Center.x = center.x;
   Center.y = center.y;
   Center.z = center.z;
+
+  // 75 when making 2 paths
+  //bezier_normals = vector<vector<Vector3>>(2,vector<Vector3>());
+  //bezier_points = vector<vector<Vector3>>(2,vector<Vector3>());
+
+  position = 0;
 }
 
 void Sphere::render()
@@ -104,4 +110,44 @@ void Sphere::calcInitialVelocity(Block & b) {
 
 	Velocity = velocityWithGravity;
 
+}
+
+void Sphere::calcBezierPath(Block & b) {
+							// this will be a const value declared elsewhere
+	float updates = 150;    // number of updates to occur before collision, 1.5 seconds/ update frequency
+
+	// the sphere location with the middle of the box's top surface as the origin
+	// the vector3 is the offset from the center of the block to the center of the top
+//	Vector3 sphereCenterRelBox = (b.center + Vector3(0,BLOCK_SIZE,0)) - Center; 
+
+	vector<Vector3> pointset = vector<Vector3>(7, Vector3());
+
+	Vector3 endpoint = b.center /* Vector3(0,BLOCK_SIZE,0)*/;
+
+
+	pointset[0] = Center;
+	pointset[1] = Center + Vector3(-5,-5,-5);
+	pointset[2] = Center + Vector3(5,5,5);
+	pointset[3] = Vector3(endpoint[0]/2.0, endpoint[1]/2.0, endpoint[2]/2.0);
+	pointset[4] = Center + Vector3(5,5,5);
+	pointset[5] = Center - Vector3(5,5,5);
+	pointset[6] = endpoint;
+
+	// make a bezier curve with 2 pieces
+	bezier_curve::generate(2, pointset, 150, bezier_points, bezier_normals);
+}
+
+void Sphere::updatePosition() 
+{
+//	cout << "made it here \n";
+//	cout << bezier_points.size() << " sets of bezier points\n";
+//	cout << bezier_points[0].size() << " bezier points in plot 1\n";
+//	cout << bezier_points[1].size() << " bezier points in plot 2\n";
+//	if(position < 75) Center = bezier_points[0][position];
+//	else Center = bezier_points[1][position-75];
+
+//	cout << "at position " << position << "\n";
+
+	if(position <= 150) Center = bezier_points[0][position];
+	position++;
 }

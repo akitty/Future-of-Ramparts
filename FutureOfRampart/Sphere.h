@@ -1,6 +1,7 @@
 #pragma once
 #include "Geode.h"
 #include "Block.h"
+#include "bezier_curve.h"
 
 // numbers that scale the objects (size/scale)
 const float WHEEL_RADIUS_SCALE = 0.25f;
@@ -28,6 +29,13 @@ class Sphere : public Geode
 	// sphere's veloctiy
 	Vector3 Velocity;
 
+	// each holds half of the updates
+	vector<vector<Vector3>> bezier_normals;
+	vector<vector<Vector3>> bezier_points;
+
+	// position along the curve, there are 150 points if 150 updates
+	int position;
+
     Sphere(Vector3 & center = Vector3(0.0, 0.0, 0.0));
 
 	// returns true if the calling sphere collides with the block.
@@ -35,6 +43,10 @@ class Sphere : public Geode
 	bool collidesWithBlock(Block &, bool);
 
 	void calcInitialVelocity(Block &);
+
+	void calcBezierPath(Block & b);
+
+	void updatePosition();
 
     void render();
 };

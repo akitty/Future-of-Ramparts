@@ -102,6 +102,13 @@ void updateVelocity(Sphere & s)
 	cannonball_trans.setTransformation(cannonball);
 }
 
+void updateBezierPosition(Sphere & s)
+{
+	s.updatePosition();
+	cannonball.translate(s.Center);
+	cannonball_trans.setTransformation(cannonball);
+}
+
 
 /**
  * Some keyboard routines to handle turning the spot and point lights
@@ -181,7 +188,7 @@ void initializeMap()
   if(player1 != NULL)
 	world.addChild(player1);
   */
-  Vector3 displacement; //= Vector3(10, 2, 20);
+  Vector3 displacement = Vector3(10, 2, 20);
   block_mat.translate(displacement);
   block_trans.setTransformation(block_mat);
 
@@ -196,7 +203,8 @@ void initializeMap()
   cannonball_trans.addChild(&s);
 
   b.center = b.center + displacement;
-  s.calcInitialVelocity(b);
+  //  s.calcInitialVelocity(b);
+  s.calcBezierPath(b);
 
   
 }
@@ -316,7 +324,7 @@ void Window::idleCallback()
  */
 void update(int value)
 {
-	if(fire) updateVelocity(s);
+	if(fire) updateBezierPosition(s);
 	if(s.collidesWithBlock(b, false)) {
 	  if (!intersect) {
 		  cout << "interesection! \n";

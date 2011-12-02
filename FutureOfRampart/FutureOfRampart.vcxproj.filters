@@ -1,142 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Managers">
-      <UniqueIdentifier>{eb9f547a-9173-40a7-8958-728ec8cf6e49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GraphicsApi">
-      <UniqueIdentifier>{19cda78c-262b-4b19-86f3-232d48a02a93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GraphicsApi">
-      <UniqueIdentifier>{ec9c9854-79ff-483a-ab3e-51cc3ed29bdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scene Graph">
-      <UniqueIdentifier>{8515d38a-6dfa-4877-a1e6-d852316383d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{cc217853-796a-4f32-bd0c-215276366cef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene Graph">
-      <UniqueIdentifier>{269530e4-2030-4957-9fe5-8cf4ca39a551}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Cannon.cpp" />
+    <ClCompile Include="Geode.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="imageloader.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="MatrixTransform.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SGGroup.cpp" />
+    <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Vector4.cpp" />
+    <ClCompile Include="bezier_curve.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="imageloader.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files\GraphicsApi</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector4.cpp">
-      <Filter>Source Files\GraphicsApi</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix4.cpp">
-      <Filter>Source Files\GraphicsApi</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="Geode.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="MatrixTransform.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="SGGroup.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files\Scene Graph</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Cannon.cpp">
-=======
-    <ClCompile Include="Explosion.cpp">
->>>>>>> 73f081601729a1c71338795cb5970146cf14350a
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameBlock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IsoCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4.h">
-      <Filter>Header Files\GraphicsApi</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector4.h">
-      <Filter>Header Files\GraphicsApi</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files\GraphicsApi</Filter>
-    </ClInclude>
-    <ClInclude Include="SGGroup.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="MatrixTransform.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Geode.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="imageloader.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureNumbers.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files\Scene Graph</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Cannon.h">
-=======
-    <ClInclude Include="Explosion.h">
->>>>>>> 73f081601729a1c71338795cb5970146cf14350a
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameBlock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Cannon.h" />
+    <ClInclude Include="Geode.h" />
+    <ClInclude Include="imageloader.h" />
+    <ClInclude Include="IsoCamera.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="MatrixTransform.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SGGroup.h" />
+    <ClInclude Include="Sphere.h" />
+    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TextureNumbers.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Vector4.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="bezier_curve.h" />
   </ItemGroup>
 </Project>
