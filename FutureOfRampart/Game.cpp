@@ -18,6 +18,7 @@ using namespace std;
 #pragma region GAME_GLOBALS
 // The frames per second we'll use for this game
 const float FPS = 10; // 50 fps
+const float numUpdates = 1500/FPS; // number of updates to reach 1.5 seconds
 
 /* fps related stuff */
 static int frames = 0;
@@ -51,13 +52,34 @@ Vector3 eye;
 
 /* James test code */
 /*********************/
+
 bool intersect = false;
-Matrix4 m;
+Matrix4 cannonball;
+MatrixTransform cannonball_trans;
+MatrixTransform block_trans;
+Matrix4 block_mat;
 MatrixTransform mat;
-Sphere s = Sphere(Vector3(1.0, 20, 20), Vector3(1.0, 1.0, 1.0), Vector3(-10.0, 0, 0), Vector3(.01, .072, 0));
 Block b;
-const float gravity = -.0001;
+Cannon c;
+Sphere s;
 bool stop = false;
+bool fire = false;
+
+float xincre = 0.0; bool xrot = false;
+float yincre = 0.0; bool yrot = false;
+float zincre = 0.0; bool zrot = false;
+float amount = .15;
+
+Matrix4 i;
+Matrix4 x;
+Matrix4 y;
+Matrix4 z;
+Matrix4 rotate_matrix;
+MatrixTransform rotate_trans;
+
+Matrix4 tran;
+MatrixTransform tosurface = MatrixTransform(tran);
+
 /*********************/
 
 #pragma endregion
@@ -65,11 +87,28 @@ bool stop = false;
 #pragma region GAME_PROTOTYPES
 
 void update(int value);
-bool collidesWith(Sphere s, Block b, bool test);
+void updateVelocity(Sphere & s);
 
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
+
+
+void updateVelocity(Sphere & s)
+{
+	s.Velocity = Vector3(s.Velocity[0], s.Velocity[1] + GRAVITY, s.Velocity[2]);
+	s.Center = s.Center + s.Velocity;
+	cannonball.translate(s.Center);
+	cannonball_trans.setTransformation(cannonball);
+}
+
+void updateBezierPosition(Sphere & s)
+{
+	s.updatePosition();
+	cannonball.translate(s.Center);
+	cannonball_trans.setTransformation(cannonball);
+}
+
 
 /**
  * Some keyboard routines to handle turning the spot and point lights
@@ -93,18 +132,29 @@ void handleInput(unsigned char key, int, int)
   }
   /* James test code */
   /*********************/
-  if(key == 'r')
+  
+  // x
+  if(key == 'b')
   {
-	  intersect = false;
-	  s.Velocity.set(.01, .072, 0);
-	  stop = false;
-	  s.Center.set(-10, 0, 0);
+	xrot = !xrot;
   }
-  if(key == 'c')
+  // y
+  if(key == 'n')
   {
-	  stop = true;
-	  s.Velocity.set(0,0,0);
+	yrot = !yrot;
   }
+  // z
+  if(key == 'm')
+  {
+	zrot = !zrot;
+  }
+  // fire cannonball
+  if(key == 'f')
+  {
+	  fire = !fire;
+  }
+  
+
   /*********************/
 }
 
@@ -117,17 +167,28 @@ void initializeMap()
 {
   gameMap = new Map(textureNums);
   world.addChild(gameMap);
-  //testBlock = new Block(Vector3(4.0f, BLOCK_SIZE, 4.0f), BLOCK_FRONT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, false);
-  //world.addChild(testBlock);
 
-  /* James test code */
-  /*********************/
-  //m.translate(s.Center); 
-  //mat.setTransformation(m);
-  //world.addChild(&mat);
-  //world.addChild(&b);
-  //mat.addChild(&s);
-  /*********************/
+  // JAMES TESTING
+  /*
+  Vector3 displacement = Vector3(10, 2, 20);
+  block_mat.translate(displacement);
+  block_trans.setTransformation(block_mat);
+
+  world.addChild(&rotate_trans);
+  rotate_trans.addChild(&c);
+  s = c.fire();
+  cannonball.translate(s.Center);
+  cannonball_trans.setTransformation(cannonball);
+  rotate_trans.addChild(&cannonball_trans);
+  rotate_trans.addChild(&block_trans);
+  block_trans.addChild(&b);
+  cannonball_trans.addChild(&s);
+
+  b.center = b.center + displacement;
+  //  s.calcInitialVelocity(b);
+  s.calcBezierPath(b);
+  */
+  //
 }
 
 void initializePlayers()
@@ -184,7 +245,7 @@ void loadAssets()
 
   // BEGIN LOADING MISCELLANEOUS TEXTURES
   Image* image = loadBMP("Smoke_Texture.bmp");
-	Image* alphaChannel = loadBMP("Smoke_Texture_Grayscale.bmp");
+  Image* alphaChannel = loadBMP("Smoke_Texture_Grayscale.bmp");
 
   // 12
 	textureNums[EXPLOSION] = TextureManager::loadAlphaTexture(image, alphaChannel);
@@ -232,27 +293,6 @@ void initializeCamera()
 // redraw when we're idle
 void Window::idleCallback()
 {
-  // UPDATE - HANDLE GAME LOGIC HERE BEFORE CALLING DRAW AGAIN
-/* James test code */
-/*********************/
-  /*
- if(s.collidesWithBlock(b, false)) {
-	  if (!intersect) {
-		  //cout << "interesection! \n";
-		  intersect = true;
-		  s.collidesWithBlock(b, true);
-	  }
-  }
-
-//  if(!stop) cout << s.Center << "\n";
-
-  m.translate(s.Center);
-  mat.setTransformation(m);
-  s.Velocity.set(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
-  s.Center = s.Center + s.Velocity;
-/*********************/
-  
-
   glutPostRedisplay();
 }
 
@@ -261,7 +301,28 @@ void Window::idleCallback()
  */
 void update(int value)
 {
+	/*
+	if(s.collidesWithBlock(b, false)) 
+	{
+	  if (!intersect)
+	  {
+		  cout << "interesection! collision at point number " << s.position << ": " << s.bezier_points[0][s.position] << "\n";
+		  intersect = true;
+		  s.collidesWithBlock(b, true);
+		  
+		  explosion = new Explosion(b.center);
+		  isExploding = true;
+		  world.addChild(explosion);
 
+		  block_trans.removeChild(&b);
+		  cannonball_trans.removeChild(&s);
+
+		  
+	  }
+    } 
+	if(fire) updateBezierPosition(s);
+	*/
+	glutTimerFunc(FPS, update, 0);
 }
 
 #pragma endregion
@@ -307,7 +368,7 @@ void Window::displayCallback()
   {
     float fps = totalfps / 25.0;
 
-    cout << "FPS: " << fps << endl;
+    //cout << "FPS: " << fps << endl;
 
     totalfps = 0.0f;
     frames = 0;
@@ -330,7 +391,7 @@ int main(int argc, char *argv[])
 
   glEnable(GL_DEPTH_TEST);                // enable depth buffering
   glClearColor(0.3, 0.5, 0.7, 1.0);   	  // set clear color to sky blue
-	glEnable(GL_COLOR_MATERIAL);
+  glEnable(GL_COLOR_MATERIAL);
   
   // Install callback functions:
   glutDisplayFunc(Window::displayCallback);
@@ -345,6 +406,8 @@ int main(int argc, char *argv[])
   initializeMap();
   initializeCamera();
   initializePlayers();
+
+  // 10 miliseconds
   glutTimerFunc(FPS, update, 0);
 
   glutMainLoop();

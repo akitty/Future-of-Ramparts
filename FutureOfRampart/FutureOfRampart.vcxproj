@@ -68,8 +68,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bezier_curve.cpp" />
     <ClCompile Include="Block.cpp" />
-    <ClCompile Include="GameBlock.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="Geode.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="imageloader.cpp" />
@@ -85,8 +86,9 @@
     <ClCompile Include="Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bezier_curve.h" />
     <ClInclude Include="Block.h" />
-    <ClInclude Include="GameBlock.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="Geode.h" />
     <ClInclude Include="imageloader.h" />
     <ClInclude Include="IsoCamera.h" />

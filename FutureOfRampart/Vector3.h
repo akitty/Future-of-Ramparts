@@ -7,12 +7,12 @@
 using namespace std;
 
 class Vector3 {
-  /*
+  
 	friend ostream & operator<<(ostream& output,  Vector3& v){ 
 	 output << "x:"<<v.x<<" y:"<<v.y<<" z:"<<v.z;
 		return output;
 	}
-  */
+  
 	
 public:
 	float x,y,z;
