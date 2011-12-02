@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bezier_curve.cpp" />
+    <ClCompile Include="bezier_patch.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="Geode.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="Nexus.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SGGroup.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -87,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bezier_curve.h" />
+    <ClInclude Include="bezier_patch.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Geode.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MatrixTransform.h" />
+    <ClInclude Include="Nexus.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Player.h" />

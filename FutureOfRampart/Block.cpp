@@ -190,7 +190,11 @@ void Block::render()
     glTranslatef(position.x, position.y, position.z);
 
     // texture this block if it has been enabled
-    if(isTextured) glEnable(GL_TEXTURE_2D);
+    if(isTextured) 
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1.0f, 1.0f, 1.0f);
+	}
 
     // for each face
     for(int i = 0; i < NUM_FACES; ++i)
@@ -212,5 +216,8 @@ void Block::render()
         glVertex3f(vertices[i][3].x, vertices[i][3].y, vertices[i][3].z);
       glEnd();
     }
+
+  if(isTextured) glDisable(GL_TEXTURE_2D);
+
   glPopMatrix();
 }

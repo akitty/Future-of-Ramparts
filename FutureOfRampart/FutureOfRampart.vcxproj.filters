@@ -17,6 +17,8 @@
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vector4.cpp" />
     <ClCompile Include="bezier_curve.cpp" />
+    <ClCompile Include="bezier_patch.cpp" />
+    <ClCompile Include="Nexus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -38,5 +40,7 @@
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="bezier_curve.h" />
+    <ClInclude Include="bezier_patch.h" />
+    <ClInclude Include="Nexus.h" />
   </ItemGroup>
 </Project>

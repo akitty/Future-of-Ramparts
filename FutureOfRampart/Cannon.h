@@ -5,7 +5,7 @@
 // offsets to center the cannon on a grid square
 const float XOFFSET = 0.0;
 const float YOFFSET = WHEEL_RADIUS;
-const float ZOFFSET = 0.0;
+const float ZOFFSET = -18.0f;
 
 class Cannon : public Geode
 {

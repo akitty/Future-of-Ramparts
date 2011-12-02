@@ -32,7 +32,7 @@ class Block : public Geode
     Vector3 position;
 	// position of the center in the cube 
 	// for collission detection
-	Vector3 center;
+	//Vector3 center;
     // whether or not this block is still movable
     bool movable;
     // adjacency list for this block

@@ -6,6 +6,7 @@ class Geode : public Node
 
   public:
     //Geode();
+	Vector3 center;
 
     // draw the subclass of this Geode
     void draw(Matrix4 & m);

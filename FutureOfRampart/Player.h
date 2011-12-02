@@ -2,15 +2,18 @@
 #include "Block.h"
 #include "Cannon.h"
 #include "Explosion.h"
+#include "Nexus.h"
+#include <vector>
 
 // player keys for processing input
-const int NUM_KEYS = 6;
+const int NUM_KEYS = 7;
 const int PLAYER_KEY_UP = 0;
 const int PLAYER_KEY_DOWN = 1;
 const int PLAYER_KEY_LEFT = 2;
 const int PLAYER_KEY_RIGHT = 3;
 const int PLAYER_KEY_ACT = 4;
 const int PLAYER_KEY_GIVE = 5;
+const int PLAYER_KEY_DETONATE = 6;
 
 class Player : public Geode
 {
@@ -20,12 +23,14 @@ class Player : public Geode
 		  minZ, 
 		  maxX, 
 		  maxZ; 
-    // the current block for the player to place
+    // the cursor pointer for the current block
     Block* currentBlock;
+	// this player's nexus
+	Nexus* nexus;
     // the starting position - also the position for the fortress to be put up
 	Vector3 center;
 	// this player's input control keys
-	char keys[6];
+	char keys[7];
 	// a pointer to the 2 dimensional array of the player's blocks,
 	// which are themselves abstract to any kind of "block"
 	Geode*** region;
@@ -101,6 +106,9 @@ class Player : public Geode
 		// the current position just needs to be that offset
 		currR = centerXoffset;
 		currC = centerZoffset;
+
+		nexus = new Nexus(currPos, BLOCK_FRONT, BLOCK_BACK, e);
+		region[currR][currC] = nexus;
 	}
 
 	/* 
@@ -115,12 +123,6 @@ class Player : public Geode
 	 */
 	void placeGameBlock();
 
-	/* 
-	 * Checks collisions and tries to place the current cannon.
-	 * If the texture below is not an emblem, then we can't place.
-	 */
-	void placeCannon();
-
 	/*
 	 * Draw all of the player's objects that are currently on screen.
 	 * Draw the current block. 
@@ -131,7 +133,7 @@ class Player : public Geode
 	/*
 	 * Handle the player's input.
 	 */
-	void handleInputs(char key);
+	Geode* handleInputs(char key);
 
 	/*
 	 * Calculate this player's score based on the number of emblem textures and cannons present.
@@ -142,7 +144,5 @@ class Player : public Geode
 	 * Pass in this block to the current player's pointer and set its position.
 	 */
 	void giveBlock();
-
-	//void giveCannon(Cannon* can);
 };
 

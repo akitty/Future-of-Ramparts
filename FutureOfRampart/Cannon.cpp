@@ -8,8 +8,8 @@ Cannon::Cannon(Vector3 center)
 							(CYLINDER_YZ_TRANSLATION + BODY_SIZE/2.0)/2.0);
 
 	CannonballInitialCenter = Vector3(Center[0],
-									Center[1]*2.0 + 2.0*CANNONBALL_YZ_TRANSLATION,
-									Center[2]*2.0 + 2.0*CANNONBALL_YZ_TRANSLATION);
+									Center[1]*2.0 + 2.0*CANNONBALL_YZ_TRANSLATION + BLOCK_SIZE,
+									Center[2]*2.0 + 2.0*CANNONBALL_YZ_TRANSLATION + ZOFFSET);
 }
 
 Sphere Cannon::fire()
@@ -23,11 +23,12 @@ void Cannon::render()
   //gluQuadricNormals(qobj, GLU_SMOOTH);
 
   glColor3f(0.0, 0.0, 0.0);
+
   // draw the wheels
   glPushMatrix();
 
   // make the cannon appear above the ground
-  glTranslatef(0, WHEEL_RADIUS, 0);
+  glTranslatef(0, WHEEL_RADIUS+BLOCK_SIZE, ZOFFSET);
   glRotatef(90, 0,1,0);
   gluCylinder(qobj, WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_HEIGHT, 20, 20); 
   glRotatef(-90, 0,1,0);

@@ -36,12 +36,7 @@ void Player::placeGameBlock()
 	}
 }
 
-void Player::placeCannon()
-{
-
-}
-
-void Player::handleInputs(char key)
+Geode* Player::handleInputs(char key)
 {
 	if(key == keys[PLAYER_KEY_UP])
 	{
@@ -103,8 +98,18 @@ void Player::handleInputs(char key)
 	{
 		giveBlock();
 	}
+	else if(key == keys[PLAYER_KEY_DETONATE])
+	{
+		if(region[currR][currC] != NULL)
+		{
+			currentBlock = NULL;
+			Geode* block = region[currR][currC];
+			return block;
+		}
+	}
 
 	cout << "CURRENT LOCATION: " << "ROW: " << currR << ", COL: " << currC << endl;
+	return NULL;
 }
 
 void Player::calculateScore()
@@ -125,8 +130,6 @@ void Player::giveBlock()
     currentBlock = newB;
 }
 
-// void Player::giveCannon(Cannon* can) {}
-
 void Player::render()
 {
 	// draw player's blocks
@@ -142,6 +145,10 @@ void Player::render()
 	// draw current block
 	if(currentBlock != NULL)
 		currentBlock->render();
+
+	// draw the player's nexus with the proper emblem
+	if(nexus != NULL)
+		nexus->render();
 }
 
 /*

@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "Explosion.h"
 #include "Player.h"
+#include "Nexus.h"
 #include <ctime>
 
 using namespace std;
@@ -168,8 +169,6 @@ void initializeMap()
   gameMap = new Map(textureNums);
   world.addChild(gameMap);
 
-  // JAMES TESTING
-  /*
   Vector3 displacement = Vector3(10, 2, 20);
   block_mat.translate(displacement);
   block_trans.setTransformation(block_mat);
@@ -180,15 +179,12 @@ void initializeMap()
   cannonball.translate(s.Center);
   cannonball_trans.setTransformation(cannonball);
   rotate_trans.addChild(&cannonball_trans);
+  cannonball_trans.addChild(&s);
   rotate_trans.addChild(&block_trans);
   block_trans.addChild(&b);
-  cannonball_trans.addChild(&s);
-
   b.center = b.center + displacement;
   //  s.calcInitialVelocity(b);
   s.calcBezierPath(b);
-  */
-  //
 }
 
 void initializePlayers()
@@ -200,7 +196,7 @@ void initializePlayers()
 	keys1[3] = 'd';
 	keys1[4] = 'z';
 	keys1[5] = 'x';
-	player1 = new Player(4, 4, -20, 0, -20, 0, keys1, MAP_TOP_P1);
+	player1 = new Player(4, 4, -20, 0, -20, 0, keys1, MAP_TOP_P2);
 
 	char keys2[6];
 	keys2[0] = 'i';
@@ -209,7 +205,7 @@ void initializePlayers()
 	keys2[3] = 'l';
 	keys2[4] = 'm';
 	keys2[5] = ',';
-	player2 = new Player(4, 4, 0, 20, 0, 20, keys2, MAP_TOP_P2);
+	player2 = new Player(4, 4, 0, 20, 0, 20, keys2, MAP_FRONT);
 
 	gameMap->addChild(player1);
 	gameMap->addChild(player2);
@@ -301,7 +297,6 @@ void Window::idleCallback()
  */
 void update(int value)
 {
-	/*
 	if(s.collidesWithBlock(b, false)) 
 	{
 	  if (!intersect)
@@ -316,12 +311,10 @@ void update(int value)
 
 		  block_trans.removeChild(&b);
 		  cannonball_trans.removeChild(&s);
-
-		  
 	  }
     } 
 	if(fire) updateBezierPosition(s);
-	*/
+
 	glutTimerFunc(FPS, update, 0);
 }
 
@@ -343,7 +336,7 @@ void Window::displayCallback()
 
   clock_t before = clock();
 
-  //worldMatrix.identity();
+  worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
