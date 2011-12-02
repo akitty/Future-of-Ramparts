@@ -95,10 +95,12 @@ void handleInput(unsigned char key, int, int)
   //Player2.handleInput(key);
   if(key == 'k')
   {
+	if(!isExploding) {
     explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
     isExploding = true;
     world.addChild(explosion);
     //gameMap->player1.addChild(explosion);
+	}
   }
   /* James test code */
   /*********************/
@@ -152,25 +154,8 @@ void handleInput(unsigned char key, int, int)
 void initializeMap()
 {
   gameMap = new Map(textureNums);
-//  world.addChild(gameMap);
-
-  /* James test code */
-  /*********************/
-//  m.translate(s.Center); 
-//  mat.setTransformation(m);
-//  world.addChild(&mat);
-//  world.addChild(&b);
-//  mat.addChild(&s);
-//  tran.translate(20,-20,-20);
-//  world.addChild(&rotate_trans);
   world.addChild(gameMap);
-//  gameMap->player1.addChild(&rotate_trans);
-//  world.addChild(&rotate_trans);
 
-//  rotate_trans.addChild(&c);
-
-//  world.addChild(&c)
-  /*********************/
 }
 
 /* Load all of the assets associated with this game
