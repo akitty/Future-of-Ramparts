@@ -56,6 +56,8 @@ Map::Map(GLuint textureNums[])
                          false);
     }
   }
+
+  drawn = false;
 }
 
 void Map::draw(Matrix4 & m)
@@ -69,13 +71,27 @@ void Map::draw(Matrix4 & m)
   // camera rotations to the map affect all blocks inside
   glLoadMatrixf(tf.getPointer());
 
-  for(int i = 0; i < MAP_HEIGHT; ++i)
+  if(!drawn)
   {
-    for(int j = 0; j < MAP_WIDTH; ++j)
+    GAME_MAP = glGenLists(1);
+    glNewList(GAME_MAP, GL_COMPILE);
+
+    for(int i = 0; i < MAP_HEIGHT; ++i)
     {
-      // draw this particular block
-      base[i][j].draw(m);
+      for(int j = 0; j < MAP_WIDTH; ++j)
+      {
+        // draw this particular block
+        base[i][j].draw(m);
+      }
     }
+
+    glEndList();
+
+    drawn = true;
+  }
+  else
+  {
+    glCallList(GAME_MAP);
   }
 
   // draw blocks that belong to players

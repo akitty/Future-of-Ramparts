@@ -8,25 +8,43 @@
 #include "TextureManager.h"
 #include "imageloader.h"
 #include "TextureNumbers.h"
-#include "ParticleEngine.h"
+#include "Explosion.h"
 #include "Map.h"
 #include <ctime>
 
 using namespace std;
 
 #pragma region GAME_GLOBALS
+// The frames per second we'll use for this game
+const float FPS = 10; // 50 fps
 
-int Window::width  = 1024;   // set window width in pixels here
-int Window::height = 768;   // set window height in pixels here
-Matrix4 worldMatrix; // The world matrix
-IsoCamera camera(worldMatrix); // The world camera
+/* fps related stuff */
+static int frames = 0;
+static float totalfps = 0.0f;
+
+// set window width in pixels here
+int Window::width  = 1024;   
+// set window height in pixels here
+int Window::height = 768;
+// The matrix that defines world rotations
+Matrix4 worldMatrix; 
+// The central camera function that modifies the world matrix
+IsoCamera camera(worldMatrix); 
+// the scene graph for the world
 SGGroup world;
+// a pointer to the game map
 Map* gameMap;
+// a test block for debugging purposes
 Block* testBlock;
+// the textures we'll use
 Image* textures[NUM_TEXTURES];
+// the numbers of these textures
 GLuint textureNums[NUM_TEXTURES];
-ParticleEngine* explosion;
+// a particle engine
+Explosion* explosion;
+// whether or not the engine is exploding
 bool isExploding = false;
+Vector3 eye;
 
 /* James test code */
 /*********************/
@@ -75,10 +93,12 @@ void handleInput(unsigned char key, int, int)
   camera.handleInput(key, 0, 0);
   //Player1.handleInput(key);
   //Player2.handleInput(key);
-  if(key == 'e')
+  if(key == 'k')
   {
+    explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
     isExploding = true;
-    glutTimerFunc(TIMER_MS, update, 0);
+    world.addChild(explosion);
+    //gameMap->player1.addChild(explosion);
   }
   /* James test code */
   /*********************/
@@ -143,14 +163,13 @@ void initializeMap()
 //  mat.addChild(&s);
 //  tran.translate(20,-20,-20);
 //  world.addChild(&rotate_trans);
-//  world.addChild(gameMap);
+  world.addChild(gameMap);
 //  gameMap->player1.addChild(&rotate_trans);
-  world.addChild(&rotate_trans);
+//  world.addChild(&rotate_trans);
 
-  rotate_trans.addChild(&c);
+//  rotate_trans.addChild(&c);
 
 //  world.addChild(&c)
-
   /*********************/
 }
 
@@ -175,6 +194,7 @@ void loadAssets()
   // create space for all of the textures
   glGenTextures(NUM_TEXTURES, textureNums);
 
+  // 0-11
   for(int i = 0; i < NUM_TEXTURES - NUM_MISC_TEXTURES; ++i)
   {
     // load each one in
@@ -182,18 +202,14 @@ void loadAssets()
   }
 
   // BEGIN LOADING MISCELLANEOUS TEXTURES
-  Image* image = loadBMP("circle.bmp");
-	Image* alphaChannel = loadBMP("circlealpha.bmp");
+  Image* image = loadBMP("Smoke_Texture.bmp");
+	Image* alphaChannel = loadBMP("Smoke_Texture_Grayscale.bmp");
 
-	textureNums[NUM_TEXTURES - 1] = TextureManager::loadAlphaTexture(image, alphaChannel);
+  // 12
+	textureNums[EXPLOSION] = TextureManager::loadAlphaTexture(image, alphaChannel);
+
 	delete image;
 	delete alphaChannel;
-}
-
-void initializeExplosion()
-{
-  explosion = new ParticleEngine(Vector3(2.0,2.0,2.0), 100, CIRCLE_COMB, 20, BLOCK_SIZE);
-  explosion->initialize();
 }
 
 #pragma endregion
@@ -218,8 +234,9 @@ void Window::reshapeCallback(int w, int h)
 void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
-  gluLookAt(0, 50, 30, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
+  eye.x = 0.0f;
+  eye.y = 50.0f;
+  eye.z = 30.0f; 
 }
 
 void initializeCamera()
@@ -237,15 +254,15 @@ void Window::idleCallback()
   // UPDATE - HANDLE GAME LOGIC HERE BEFORE CALLING DRAW AGAIN
 /* James test code */
 /*********************/
-	/*
+
  if(s.collidesWithBlock(b, false)) {
 	  if (!intersect) {
-		  cout << "interesection! \n";
+		  //cout << "interesection! \n";
 		  intersect = true;
 		  s.collidesWithBlock(b, true);
 		  
 	  }
-  } */
+  } 
 
 	if(xrot) xincre+=amount;
 	if(yrot) yincre+=amount;
@@ -277,26 +294,9 @@ void Window::idleCallback()
   s.Velocity.set(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
   s.Center = s.Center + s.Velocity;
 /*********************/
+  
 
-  Window::displayCallback();
-}
-
-
-/*
- * particles will fade out in proportion with duration.
- * particle velocity and movement updating should be scaled to the bounding
- * radius.
- * we want to also subtract the gravity constraint each time to the 
- * particles' trajectory so that it eventually falls.
- */
-void update(int value)
-{
-  /* timer processing */
-  explosion->advance(TIMER_MS / 1000.0f);
-	glutPostRedisplay();
-
-  /* recall update after specified milliseconds have passed */
-  glutTimerFunc(TIMER_MS, update, 0);
+  glutPostRedisplay();
 }
 
 #pragma endregion
@@ -307,14 +307,47 @@ void Window::displayCallback()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // rotate camera
+  worldMatrix.multiply(eye);
+  // set the new look-at point
+  gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
+  clock_t before = clock();
+
   // game scene graph
-  //glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
+  worldMatrix.identity();
   world.draw(worldMatrix);
 
+  if(isExploding)
+  {
+    if(explosion->done)
+    {
+      world.removeChild(explosion);
+      delete explosion;
+      isExploding = false;
+    }
+  }
+
   glutSwapBuffers();
+
+    clock_t after = clock();
+
+  totalfps += 1.0f / ((float)(after - before) / CLOCKS_PER_SEC);
+    
+  frames++;
+
+  if(frames == 25)
+  {
+    float fps = totalfps / 25.0;
+
+    cout << "FPS: " << fps << endl;
+
+    totalfps = 0.0f;
+    frames = 0;
+  }
 }
 
 #pragma endregion
@@ -332,10 +365,8 @@ int main(int argc, char *argv[])
   glutCreateWindow("Future of Rampart");  
 
   glEnable(GL_DEPTH_TEST);                // enable depth buffering
-  glClearColor(0.3, 0.5, 1.0, 1.0);   	  // set clear color to black
-	glEnable(GL_BLEND);
+  glClearColor(0.3, 0.5, 0.7, 1.0);   	  // set clear color to sky blue
 	glEnable(GL_COLOR_MATERIAL);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   
   // Install callback functions:
   glutDisplayFunc(Window::displayCallback);
@@ -349,7 +380,6 @@ int main(int argc, char *argv[])
   loadAssets();
   initializeMap();
   initializeCamera();
-  initializeExplosion();
 
   glutMainLoop();
   return 0;

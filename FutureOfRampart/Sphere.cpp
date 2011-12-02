@@ -115,11 +115,11 @@ bool Sphere::collidesWithBlock(Block & b, bool test)
 
   if(test) 
   {
-	cout << "sphere at position " << Center << "\n";
-	cout << "block at position " << b.center << "\n";
-	cout << sphereCenterRelBox << " is the position that the sphere center is in relation to the box \n";
-	cout << boxPoint << " is the closest point on the box to the sphere with respect to the box's center \n";
-	cout << distVal << "units from center of sphere \n";
+	//cout << "sphere at position " << Center << "\n";
+	//cout << "block at position " << b.center << "\n";
+	//cout << sphereCenterRelBox << " is the position that the sphere center is in relation to the box \n";
+	//cout << boxPoint << " is the closest point on the box to the sphere with respect to the box's center \n";
+	//cout << distVal << "units from center of sphere \n";
   }
 
   // if the distance from the closest point on the cube to the sphere is

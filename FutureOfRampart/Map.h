@@ -17,6 +17,9 @@ class Map : public Node
   public:
     // the groups containing the objects for player1 and player2
     SGGroup player1, player2;
+    
+    bool drawn;
+    GLuint GAME_MAP;
 
     // the base world grid
     Block base[MAP_HEIGHT][MAP_WIDTH];

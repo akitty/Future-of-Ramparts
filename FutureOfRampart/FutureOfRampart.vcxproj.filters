@@ -65,13 +65,14 @@
     <ClCompile Include="SGGroup.cpp">
       <Filter>Source Files\Scene Graph</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files\Scene Graph</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Cannon.cpp">
+=======
+    <ClCompile Include="Explosion.cpp">
+>>>>>>> 73f081601729a1c71338795cb5970146cf14350a
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -121,13 +122,14 @@
     <ClInclude Include="TextureNumbers.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\Scene Graph</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Cannon.h">
+=======
+    <ClInclude Include="Explosion.h">
+>>>>>>> 73f081601729a1c71338795cb5970146cf14350a
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
