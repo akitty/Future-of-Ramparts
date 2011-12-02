@@ -92,29 +92,37 @@ void Block::place()
 void Block::moveUp()
 {
   if(movable)
+  {
     position.z -= BLOCK_SIZE;
     center.z -= BLOCK_SIZE;
+  }
 }
 
 void Block::moveDown()
 {
   if(movable)
+  {
     position.z += BLOCK_SIZE;
     center.z += BLOCK_SIZE;
+  }
 }
 
 void Block::moveLeft()
 {
   if(movable)
+  {
     position.x -= BLOCK_SIZE;
     center.x -= BLOCK_SIZE;
+  }
 }
 
 void Block::moveRight()
 {
   if(movable)
+  {
     position.x += BLOCK_SIZE;
     center.x += BLOCK_SIZE;
+  }
 }
 
 /* swap the top face with the new one */

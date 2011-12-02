@@ -75,6 +75,9 @@
 >>>>>>> 73f081601729a1c71338795cb5970146cf14350a
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -130,6 +133,9 @@
 =======
     <ClInclude Include="Explosion.h">
 >>>>>>> 73f081601729a1c71338795cb5970146cf14350a
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

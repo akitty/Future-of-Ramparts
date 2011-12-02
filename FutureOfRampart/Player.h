@@ -20,9 +20,9 @@ class Player : public Geode
 		  maxX, 
 		  maxZ; 
     // the current block for the player to place
-    Geode* currentBlock;
+    Block* currentBlock;
     // the starting position - also the position for the fortress to be put up
-    Vector3 origin;
+	Vector3 center;
 	// this player's input control keys
 	char keys[6];
 	// a pointer to the 2 dimensional array of the player's blocks,
@@ -32,6 +32,14 @@ class Player : public Geode
 	int rows, columns, spaces;
 	// player's emblem texture which gets placed on all of the player's tiles in enclosed portions
 	GLuint emblem;
+	// current position of the player
+	Vector3 currPos;
+	// current row and column 
+	int currR, currC;
+	// maximum bounds in the form of integers
+	int minR, maxR, minC, maxC;
+	// negative offset for our currR and currC
+	int negX, negZ;
 
 	/* 
 	 * Initialize this player. 
@@ -40,17 +48,25 @@ class Player : public Geode
 	 * The bounds are the restrictions on which section of the map this player can place blocks on.
 	 * The emblem is the texture put in on enclosed portions of the player's region.
 	 */
-    Player(Vector3 o, float xmin, float xmax, float zmin, float zmax, char keycommands[], GLuint e) : 
-	origin(o), minX(xmin), maxX(xmax), minZ(zmin), maxZ(zmax), emblem(e)
+    Player(int centerXoffset, int centerZoffset, float xmin, float xmax, float zmin, float zmax, char keycommands[], GLuint e) : minX(xmin), maxX(xmax), minZ(zmin), maxZ(zmax), emblem(e)
 	{
 		// set in key commands
 		for(int i = 0; i < NUM_KEYS; ++i)
 			keys[i] = keycommands[i];
 
 		// create the dimensions of the region
-		rows = (maxX - minX) / BLOCK_SIZE;
-		columns = (maxZ - minZ) / BLOCK_SIZE;
+		rows = ((maxX - minX) / BLOCK_SIZE);
+		columns = ((maxZ - minZ) / BLOCK_SIZE);
+		
+		// should not actually be shrinking these....
 		spaces = rows * columns;
+		
+		cout << "ROWS: " << rows << endl;
+		cout << "MINIMUM ROW: " << minR << endl;
+		cout << "MAXIMUM ROW: " << maxR << endl;
+		cout << "MINIMUM COLUMN "  << minC << endl;
+		cout << "MAXIMUM COLUMN " << maxC << endl;
+		cout << "COLUMNS: " << columns << endl;
 
 		// initialize the region's dimensions
 		region = new Geode**[rows];
@@ -67,6 +83,23 @@ class Player : public Geode
 				region[i][j] = NULL;
 			}
 		}
+
+		// initialize pointers to null
+		currentBlock = NULL;
+
+		// we want to calculate and place the fortress at the center location
+
+		// start the position for the first block to be given at
+		// needs to be the minimum values of x and z (actual) + the offset in each direction
+		center = Vector3(minX + BLOCK_SIZE * centerXoffset, 
+						 BLOCK_SIZE, 
+						 minZ + BLOCK_SIZE * centerZoffset);
+
+		currPos = Vector3(center.x, center.y + BLOCK_SIZE, center.z);
+
+		// the current position just needs to be that offset
+		currR = centerXoffset;
+		currC = centerZoffset;
 	}
 
 	/* 
@@ -103,5 +136,12 @@ class Player : public Geode
 	 * Calculate this player's score based on the number of emblem textures and cannons present.
 	 */
 	void calculateScore();
+
+	/*
+	 * Pass in this block to the current player's pointer and set its position.
+	 */
+	void giveBlock();
+
+	//void giveCannon(Cannon* can);
 };
 
