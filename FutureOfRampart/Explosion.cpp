@@ -1,4 +1,5 @@
 #include "Explosion.h"
+#include "TextureArray.h"
 #include <algorithm>
 
 const float PI = 3.1415926535f;

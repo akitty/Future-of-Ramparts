@@ -8,8 +8,8 @@
 #include "TextureManager.h"
 #include "imageloader.h"
 #include "TextureNumbers.h"
-#include "Explosion.h"
 #include "Map.h"
+#include "Explosion.h"
 #include "Player.h"
 #include <ctime>
 
@@ -30,7 +30,7 @@ int Window::height = 768;
 // The matrix that defines world rotations
 Matrix4 worldMatrix; 
 // PLAYER 1
-Player* player1;
+Player *player1, *player2;
 // The central camera function that modifies the world matrix
 IsoCamera camera(worldMatrix); 
 // the scene graph for the world
@@ -80,12 +80,9 @@ void handleInput(unsigned char key, int, int)
   camera.handleInput(key, 0, 0);
   if(player1 != NULL)
 	  player1->handleInputs(key);
-  //Player2.handleInput(key);
-  if(key == 'p')
-  {
-	  player1->giveBlock();
-  }
-  if(key == 'k')
+  if(player2 != NULL)
+	  player2->handleInputs(key);
+  if(key == 'y')
   {
 	  if(!isExploding)
 	  {
@@ -120,21 +117,8 @@ void initializeMap()
 {
   gameMap = new Map(textureNums);
   world.addChild(gameMap);
-  testBlock = new Block(Vector3(4.0f, BLOCK_SIZE, 4.0f), BLOCK_TOP, BLOCK_FRONT, BLOCK_BACK, BLOCK_LEFT, BLOCK_RIGHT, BLOCK_RIGHT, false);
-  world.addChild(testBlock);
-
-   char keys[6];
-
-
-  keys[0] = 'z';
-  keys[1] = 'x';
-  keys[2] = 'c';
-  keys[3] = 'v';
-  keys[4] = 'b';
-  keys[5] = 'n';
-  player1 = new Player(4, 4, -10, 10, -10, 10, keys, MAP_TOP_P1);
-  if(player1 != NULL)
-	world.addChild(player1);
+  //testBlock = new Block(Vector3(4.0f, BLOCK_SIZE, 4.0f), BLOCK_FRONT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, false);
+  //world.addChild(testBlock);
 
   /* James test code */
   /*********************/
@@ -144,6 +128,30 @@ void initializeMap()
   //world.addChild(&b);
   //mat.addChild(&s);
   /*********************/
+}
+
+void initializePlayers()
+{
+	char keys1[6];
+	keys1[0] = 'w';
+	keys1[1] = 's';
+	keys1[2] = 'a';
+	keys1[3] = 'd';
+	keys1[4] = 'z';
+	keys1[5] = 'x';
+	player1 = new Player(4, 4, -20, 0, -20, 0, keys1, MAP_TOP_P1);
+
+	char keys2[6];
+	keys2[0] = 'i';
+	keys2[1] = 'k';
+	keys2[2] = 'j';
+	keys2[3] = 'l';
+	keys2[4] = 'm';
+	keys2[5] = ',';
+	player2 = new Player(4, 4, 0, 20, 0, 20, keys2, MAP_TOP_P2);
+
+	gameMap->addChild(player1);
+	gameMap->addChild(player2);
 }
 
 /* Load all of the assets associated with this game
@@ -233,7 +241,6 @@ void Window::idleCallback()
 		  //cout << "interesection! \n";
 		  intersect = true;
 		  s.collidesWithBlock(b, true);
-		  
 	  }
   }
 
@@ -275,7 +282,7 @@ void Window::displayCallback()
 
   clock_t before = clock();
 
-  worldMatrix.identity();
+  //worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
@@ -337,6 +344,7 @@ int main(int argc, char *argv[])
   loadAssets();
   initializeMap();
   initializeCamera();
+  initializePlayers();
   glutTimerFunc(FPS, update, 0);
 
   glutMainLoop();

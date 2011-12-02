@@ -27,7 +27,13 @@ Player::~Player()
 
 void Player::placeGameBlock()
 {
-	currentBlock->place();
+	// no overriding locations
+	if(region[currR][currC] == NULL)
+	{
+		currentBlock->place();
+		region[currR][currC] = currentBlock;
+		currentBlock = NULL;
+	}
 }
 
 void Player::placeCannon()
@@ -90,13 +96,12 @@ void Player::handleInputs(char key)
 		if(currentBlock != NULL)
 		{
 			placeGameBlock();
-			region[currR][currC] = currentBlock;
-			currentBlock = NULL;
 		}
 	}
-	else if(key == keys[PLAYER_KEY_ROTATE])
+	// probably nothing for the purposes of this demonstration
+	else if(key == keys[PLAYER_KEY_GIVE])
 	{
-
+		giveBlock();
 	}
 
 	cout << "CURRENT LOCATION: " << "ROW: " << currR << ", COL: " << currC << endl;
@@ -109,7 +114,9 @@ void Player::calculateScore()
 
 void Player::giveBlock()
 {
-	Block* newB = new Block(Vector3(1.0f, 1.0f, 1.0f), BLOCK_TOP, BLOCK_FRONT, BLOCK_BACK, BLOCK_LEFT, BLOCK_RIGHT, BLOCK_RIGHT, true);
+	Block* newB = new Block(Vector3(1.0f, 1.0f, 1.0f), BLOCK_FRONT, 
+		BLOCK_LEFT, BLOCK_LEFT, BLOCK_LEFT, 
+		BLOCK_LEFT, BLOCK_LEFT, true);
 	
 	// move block to current position
 	newB->position = currPos;
@@ -136,3 +143,127 @@ void Player::render()
 	if(currentBlock != NULL)
 		currentBlock->render();
 }
+
+/*
+struct bfsnode {
+  int i, j;
+  bfsnode * previous;
+  bfsnode(int I, int J, bfsnode * prev) : i(I), j(J), previous(prev) {}
+  bool operator==(const bfsnode& n) { return i == n.i && j == n.j; }
+  bool operator!=(const bfsnode& n) { return i != n.i || j != n.j; }
+};
+ 
+struct enclosure {
+  vector< pair<int, int> > squares;
+  enclosure() {}
+  enclosure(const vector<bfsnode>& cycle) {
+  }
+  static bool valid(const vector<bfsnode>& cycle) {
+    // NB. this may not always work!
+    int imin = rows, imax = 0, jmin = columns, jmax = 0;
+    for(vector<bfsnode>::iterator p = cycle.begin(); p != cycle.end(); ++p) {
+      if(p->i > imax) imax = p->i;
+      if(p->i < imin) imin = p->i;
+      if(p->j > jmax) jmax = p->j;
+      if(p->j < jmin) jmin = p->j;
+    }
+    return (imax - imin > 1) && (jmax - jmin > 1);
+  }
+};
+ 
+bool in(const vector<bfsnode>& v, const bfsnode& i) {
+  for(vector<bfsnode>::iterator p = v.begin(); p != v.end(); ++p)
+    if(*p == i)
+      return true;
+  return false;
+}
+ 
+vector<bfsnode> cycleFrom(const bfsnode& n) {
+  vector<bfsnode> v;
+  bfsnode ptr = n;
+  for(; ptr.previous; ptr = ptr.previous) v.push_back(ptr);
+  return v;
+}
+ 
+void find_enclosed_spaces() {
+  queue<bfsnode> q;
+  vector<bfsnode> t;
+ 
+  for(int i = 0; i < rows; ++i)
+    for(int j = 0; j < columns; ++j)
+      if(region[i][j]) {
+        q.push_back(bfsnode(i, j, NULL));
+        break;
+      }
+ 
+  while(q.size() > 0) {
+    int i, j;
+    bfsnode n = q.pop_front();
+    t.push_back(n);
+    i = n.i - 1;
+    j = n.j - 1;
+    if(i >= 0 && j >= 0 && region[i][j]) {
+      bfsnode next(i, j, n);
+      if(next != n) {
+        if(in(t, next)) {
+          vector<bfsnode> c = cycleFrom(n);
+          if(enclosure::valid(c))
+            result.push_back(enclosure(c));
+          else
+            q.push_back(next);
+        }
+        else
+          q.push_back(next);
+      }
+    }
+    i = n.i - 1;
+    j = n.j + 1;
+    if(i >= 0 && j < columns && region[i][j]) {
+      bfsnode next(i, j, n);
+      if(next != n) {
+        if(in(t, next)) {
+          vector<bfsnode> c = cycleFrom(n);
+          if(enclosure::valid(c))
+            result.push_back(enclosure(c));
+          else
+            q.push_back(next);
+        }
+        else
+          q.push_back(next);
+      }
+    }
+    i = n.i + 1;
+    j = n.j - 1;
+    if(i < rows && j >= 0 && region[i][j]) {
+      bfsnode next(i, j, n);
+      if(next != n) {
+        if(in(t, next)) {
+          vector<bfsnode> c = cycleFrom(n);
+          if(enclosure::valid(c))
+            result.push_back(enclosure(c));
+          else
+            q.push_back(next);
+        }
+        else
+          q.push_back(next);
+      }
+    }
+    i = n.i + 1;
+    j = n.j + 1;
+    if(i < rows && j < columns && region[i][j]) {
+      bfsnode next(i, j, n);
+      if(next != n) {
+        if(in(t, next)) {
+          vector<bfsnode> c = cycleFrom(n);
+          if(enclosure::valid(c))
+            result.push_back(enclosure(c));
+          else
+            q.push_back(next);
+        }
+        else
+          q.push_back(next);
+      }
+    }
+  }
+}
+*/

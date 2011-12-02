@@ -9,7 +9,7 @@ const int PLAYER_KEY_DOWN = 1;
 const int PLAYER_KEY_LEFT = 2;
 const int PLAYER_KEY_RIGHT = 3;
 const int PLAYER_KEY_ACT = 4;
-const int PLAYER_KEY_ROTATE = 5;
+const int PLAYER_KEY_GIVE = 5;
 
 class Player : public Geode
 {

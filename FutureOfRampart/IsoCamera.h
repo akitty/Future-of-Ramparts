@@ -88,15 +88,15 @@ class IsoCamera
 		inline void handleInput(unsigned char key, int, int) 
 		{
 			// x pos
-			if(key == 'd') translatePosX();
+			//if(key == 'd') translatePosX();
 			// x neg
-			else if(key == 'a') translateNegX();
+			//else if(key == 'a') translateNegX();
 			// z pos
-			else if(key == 'w') translatePosZ();
+			//else if(key == 'w') translatePosZ();
 			// z neg
-			else if(key == 's') translateNegZ();
+			//else if(key == 's') translateNegZ();
 			// rotate pos y
-			else if(key == 'q') rotateView();
+			if(key == 'q') rotateView();
 			// rotate neg y
 			else if(key == 'e') rotateViewCounter();
 		}

@@ -11,12 +11,11 @@ const int MAP_HEIGHT = 52;
  * The map containing the base world, each player's
  * blocks, and the delimiting zones
  */
-class Map : public Node
+class Map : public SGGroup
 {
-  public:
-    // the groups containing the objects for player1 and player2
-    SGGroup player1, player2;
-    
+public:
+	typedef SGGroup super;
+
     bool drawn;
     GLuint GAME_MAP;
 
