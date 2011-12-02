@@ -3,6 +3,7 @@
 #include "SGGroup.h"
 #include "Block.h"
 #include "Sphere.h"
+#include "Cannon.h"
 
 const int MAP_WIDTH = 20;
 const int MAP_HEIGHT = 48;

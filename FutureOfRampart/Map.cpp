@@ -78,6 +78,11 @@ void Map::draw(Matrix4 & m)
     }
   }
 
+  // draw blocks that belong to players
+  player1.draw(m);
+  player2.draw(m);
+
+
   // reset the current matrix
   glPopMatrix();
 }

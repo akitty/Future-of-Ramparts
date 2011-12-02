@@ -71,6 +71,9 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files\Scene Graph</Filter>
     </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

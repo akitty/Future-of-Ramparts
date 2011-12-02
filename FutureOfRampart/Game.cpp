@@ -35,8 +35,24 @@ Matrix4 m;
 MatrixTransform mat;
 Sphere s = Sphere(Vector3(1.0, 20, 20), Vector3(1.0, 1.0, 1.0), Vector3(-10.0, 0, 0), Vector3(.01, .072, 0));
 Block b;
+Cannon c;
 const float gravity = -.0001;
 bool stop = false;
+
+float xincre = 0.0; bool xrot = false;
+float yincre = 0.0; bool yrot = false;
+float zincre = 0.0; bool zrot = false;
+float amount = .15;
+
+Matrix4 i;
+Matrix4 x;
+Matrix4 y;
+Matrix4 z;
+Matrix4 rotate_matrix;
+MatrixTransform rotate_trans;
+
+Matrix4 tran;
+MatrixTransform tosurface = MatrixTransform(tran);
 /*********************/
 
 #pragma endregion
@@ -78,6 +94,33 @@ void handleInput(unsigned char key, int, int)
 	  stop = true;
 	  s.Velocity.set(0,0,0);
   }
+  // x
+  if(key == 'b')
+  {
+	xrot = !xrot;
+  }
+  // y
+  if(key == 'n')
+  {
+	yrot = !yrot;
+  }
+  // z
+  if(key == 'm')
+  {
+	zrot = !zrot;
+  }
+  /*
+  // create block
+  if(key == 'o')
+  {
+	block();
+  }
+  // place block
+  if(key == 'p')
+  {
+	zrot = !zrot;
+  }
+  */
   /*********************/
 }
 
@@ -89,15 +132,25 @@ void handleInput(unsigned char key, int, int)
 void initializeMap()
 {
   gameMap = new Map(textureNums);
-  world.addChild(gameMap);
+//  world.addChild(gameMap);
 
   /* James test code */
   /*********************/
-  m.translate(s.Center); 
-  mat.setTransformation(m);
-  world.addChild(&mat);
-  world.addChild(&b);
-  mat.addChild(&s);
+//  m.translate(s.Center); 
+//  mat.setTransformation(m);
+//  world.addChild(&mat);
+//  world.addChild(&b);
+//  mat.addChild(&s);
+//  tran.translate(20,-20,-20);
+//  world.addChild(&rotate_trans);
+//  world.addChild(gameMap);
+//  gameMap->player1.addChild(&rotate_trans);
+  world.addChild(&rotate_trans);
+
+  rotate_trans.addChild(&c);
+
+//  world.addChild(&c)
+
   /*********************/
 }
 
@@ -184,6 +237,7 @@ void Window::idleCallback()
   // UPDATE - HANDLE GAME LOGIC HERE BEFORE CALLING DRAW AGAIN
 /* James test code */
 /*********************/
+	/*
  if(s.collidesWithBlock(b, false)) {
 	  if (!intersect) {
 		  cout << "interesection! \n";
@@ -191,9 +245,32 @@ void Window::idleCallback()
 		  s.collidesWithBlock(b, true);
 		  
 	  }
-  }
+  } */
 
-  if(!stop) cout << s.Center << "\n";
+	if(xrot) xincre+=amount;
+	if(yrot) yincre+=amount;
+	if(zrot) zincre+=amount;
+
+	x = i;
+	y = i;
+	z = i;
+	rotate_matrix = i;
+
+	x.rotatex(xincre);
+	y.rotatey(yincre);
+	z.rotatez(zincre);
+
+	rotate_matrix.multiply(x);
+	rotate_matrix.multiply(y);
+	rotate_matrix.multiply(z);
+
+	rotate_trans.setTransformation(rotate_matrix);
+
+
+
+
+
+//  if(!stop) cout << s.Center << "\n";
 
   m.translate(s.Center);
   mat.setTransformation(m);
