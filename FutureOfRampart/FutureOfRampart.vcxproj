@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="GameBlock.cpp" />
     <ClCompile Include="Geode.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="imageloader.cpp" />
@@ -85,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="GameBlock.h" />
     <ClInclude Include="Geode.h" />
     <ClInclude Include="imageloader.h" />
     <ClInclude Include="IsoCamera.h" />

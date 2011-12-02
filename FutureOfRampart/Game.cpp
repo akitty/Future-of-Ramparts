@@ -10,6 +10,7 @@
 #include "TextureNumbers.h"
 #include "Explosion.h"
 #include "Map.h"
+#include "Player.h"
 #include <ctime>
 
 using namespace std;
@@ -28,6 +29,8 @@ int Window::width  = 1024;
 int Window::height = 768;
 // The matrix that defines world rotations
 Matrix4 worldMatrix; 
+// PLAYER 1
+Player* player1;
 // The central camera function that modifies the world matrix
 IsoCamera camera(worldMatrix); 
 // the scene graph for the world
@@ -75,8 +78,13 @@ bool collidesWith(Sphere s, Block b, bool test);
 void handleInput(unsigned char key, int, int)
 {
   camera.handleInput(key, 0, 0);
-  //Player1.handleInput(key);
+  if(player1 != NULL)
+	  player1->handleInputs(key);
   //Player2.handleInput(key);
+  if(key == 'p')
+  {
+	  player1->giveBlock();
+  }
   if(key == 'k')
   {
 	  if(!isExploding)
@@ -112,6 +120,21 @@ void initializeMap()
 {
   gameMap = new Map(textureNums);
   world.addChild(gameMap);
+  testBlock = new Block(Vector3(4.0f, BLOCK_SIZE, 4.0f), BLOCK_TOP, BLOCK_FRONT, BLOCK_BACK, BLOCK_LEFT, BLOCK_RIGHT, BLOCK_RIGHT, false);
+  world.addChild(testBlock);
+
+   char keys[6];
+
+
+  keys[0] = 'z';
+  keys[1] = 'x';
+  keys[2] = 'c';
+  keys[3] = 'v';
+  keys[4] = 'b';
+  keys[5] = 'n';
+  player1 = new Player(4, 4, -10, 10, -10, 10, keys, MAP_TOP_P1);
+  if(player1 != NULL)
+	world.addChild(player1);
 
   /* James test code */
   /*********************/
@@ -244,6 +267,7 @@ void Window::displayCallback()
 
   clock_t before = clock();
 
+  worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
@@ -268,7 +292,7 @@ void Window::displayCallback()
   {
     float fps = totalfps / 25.0;
 
-    cout << "FPS: " << fps << endl;
+    //cout << "FPS: " << fps << endl;
 
     totalfps = 0.0f;
     frames = 0;
