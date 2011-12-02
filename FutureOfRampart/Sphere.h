@@ -18,6 +18,8 @@ const float WHEEL_HEIGHT = CANNON_SIZE*WHEEL_HEIGHT_SCALE;
 const float BODY_SIZE = CANNON_SIZE*CUBE_SCALE;
 const float CANNONBALL_YZ_TRANSLATION = sqrt(CYLINDER_RADIUS);
 
+const float GRAVITY = -.01;
+
 class Sphere : public Geode
 {
   public:

@@ -59,16 +59,16 @@ bool Sphere::collidesWithBlock(Block & b, bool test)
 
   if(test) 
   {
-	//cout << "sphere at position " << Center << "\n";
-	//cout << "block at position " << b.center << "\n";
-	//cout << sphereCenterRelBox << " is the position that the sphere center is in relation to the box \n";
-	//cout << boxPoint << " is the closest point on the box to the sphere with respect to the box's center \n";
-	//cout << distVal << "units from center of sphere \n";
+	cout << "sphere at position " << Center << "\n";
+	cout << "block at position " << b.center << "\n";
+	cout << sphereCenterRelBox << " is the position that the sphere center is in relation to the box \n";
+	cout << boxPoint << " is the closest point on the box to the sphere with respect to the box's center \n";
+	cout << distVal << "units from center of sphere \n";
   }
 
   // if the distance from the closest point on the cube to the sphere is
   // less than the radius of the sphere, there has been a colission.
-  if (distVal < 1) 
+  if (distVal < (CYLINDER_RADIUS*CYLINDER_RADIUS)) 
 	return true;
   else
 	return false;
@@ -78,19 +78,24 @@ bool Sphere::collidesWithBlock(Block & b, bool test)
 // we will assume there is an update every 10ms and collision occurs in 1.5 seconds.
 // assume a gravity constant
 void Sphere::calcInitialVelocity(Block & b) {
-	float gravity = -.0001;	  // this will be a const value declared elsewhere
-	float updates = 500;    // number of updates to occur before collision, 1.5 seconds/ update frequency
+							// this will be a const value declared elsewhere
+	float updates = 150;    // number of updates to occur before collision, 1.5 seconds/ update frequency
 
-	float maxGravity = gravity*updates; // the gravitational effect at the time of collision
+	float maxGravity = GRAVITY*updates; // the gravitational effect at the time of collision
 
 	// the sphere location with the middle of the box's top surface as the origin
 	// the vector3 is the offset from the center of the block to the center of the top
-	Vector3 sphereCenterRelBox = Center - (b.center + Vector3(0,2,0)); 
+	Vector3 sphereCenterRelBox = (b.center + Vector3(0,BLOCK_SIZE,0)) - Center; 
+
+	Vector3 temp = b.center + Vector3(0,BLOCK_SIZE,0);
 
 	// if the sphere traveled in a straight line, this is w/o gravitation effect
 	Vector3 velocityWithoutGravity = Vector3(sphereCenterRelBox[0]/updates, 
 											sphereCenterRelBox[1]/updates, 
 											sphereCenterRelBox[2]/updates);
+	cout << "firing at location " << "{" << temp[0] << ", " << temp[1] << ", " << temp[2] << "}\n";
+	cout << "from location " << "{" << Center[0] << ", " << Center[1] << ", " << Center[2] << "}\n";
+	cout << "without gravity " << velocityWithoutGravity[0] << ", " << velocityWithoutGravity[1] << ", " << velocityWithoutGravity[2] << "\n";
 
 	// convert line into a curve to change y velocity to take into account gravity
 	Vector3 velocityWithGravity = Vector3(velocityWithoutGravity[0], 

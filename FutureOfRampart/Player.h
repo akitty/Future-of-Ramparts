@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "Cannon.h"
 #include "Explosion.h"
 
 // player keys for processing input

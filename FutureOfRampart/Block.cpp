@@ -7,7 +7,7 @@ using namespace std;
 Block::Block()
 {
   position = Vector3(0.0, 0.0, 0.0);
-  center = Vector3(2.0, 2.0, -2.0);
+  center = Vector3(BLOCK_SIZE/2.0, BLOCK_SIZE/2.0, BLOCK_SIZE/-2.0);
   movable = false;
   isTextured = false;
   generate();
@@ -18,7 +18,7 @@ Block::Block(const Vector3 & pos)
   movable = false;
   isTextured = false;
   position = Vector3(pos.x, pos.y, pos.z);
-  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
+  center = Vector3(pos.x + BLOCK_SIZE/2.0, pos.y + BLOCK_SIZE/2.0, pos.z - BLOCK_SIZE/2.0);
   generate();
 }
 
@@ -27,7 +27,7 @@ Block::Block(const Vector3 & pos, bool canBePlaced)
   movable = canBePlaced;
   isTextured = false;
   position = Vector3(pos.x, pos.y, pos.z);
-  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
+  center = Vector3(pos.x + BLOCK_SIZE/2.0, + pos.y + BLOCK_SIZE/2.0, pos.z - BLOCK_SIZE/2.0);
   generate();
 }
 
@@ -38,7 +38,7 @@ Block::Block(const Vector3 & pos, GLuint top, GLuint front, GLuint back,
 {
   movable = canBePlaced;
   position = Vector3(pos.x, pos.y, pos.z);
-  center = Vector3(pos.x + 2.0, + pos.y + 2.0, pos.z - 2.0);
+  center = Vector3(pos.x + BLOCK_SIZE/2.0, + pos.y + BLOCK_SIZE/2.0, pos.z - BLOCK_SIZE/2.0);
        
   faceTextures[BACKFACE]    = back;
   faceTextures[BOTTOMFACE]  = bottom;
