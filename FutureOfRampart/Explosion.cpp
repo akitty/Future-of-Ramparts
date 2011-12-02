@@ -13,7 +13,6 @@ float randomFloat() {
 Explosion::Explosion(Vector3 o) :
                 origin(o)
 {
-cout << "NUM PARTICLES " << NUM_PARTICLES << endl;
   for(int i = 0; i < NUM_PARTICLES; ++i)
   {
     particles.push_back(new SmokeParticle());
@@ -154,7 +153,6 @@ void Explosion::render()
 
 void Explosion::end()
 {
-cout << "CLEARING VECTOR DUE TO END OF ANIMATION " << endl;
   particles.clear();
   done = true;
 }

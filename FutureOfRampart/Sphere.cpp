@@ -1,74 +1,18 @@
 #include "Sphere.h"
-#include <GL/glut.h>
 
-Sphere::Sphere(Vector3 & params, Vector3 & color, Vector3 & center, Vector3 & velocity, Vector3 & scale, bool wire)
+Sphere::Sphere(Vector3 & center)
 {
-  Params.x = params.x;
-  Params.y = params.y;
-  Params.z = params.z;
-
-  Color.x = color.x;
-  Color.y = color.y;
-  Color.z = color.z;
-  
-  if(scale.x == 1.0 &&
-    scale.y == 1.0 &&
-    scale.z == 1.0)
-  {
-    scaled = false;
-  }
-  else
-  {
-    scaled = true;
-    Scale.x = scale.x;
-    Scale.y = scale.y;
-    Scale.z = Scale.z;
-  }
-  Wire = wire;
-
   Center.x = center.x;
   Center.y = center.y;
   Center.z = center.z;
-
-  Velocity.x = velocity.x;
-  Velocity.y = velocity.y;
-  Velocity.z = velocity.z;
-}
-
-Sphere::Sphere()
-{
-  Params.x = 1.0;
-  Params.y = 20;
-  Params.z = 20;
-
-  Color.x = 1.0;
-  Color.y = 1.0;
-  Color.z = 1.0;
-
-  scaled = false;
-
-  Wire = false;
-
-  Center = Vector3(0,0,0);
-  Velocity = Vector3(0,0,0);
 }
 
 void Sphere::render()
 {
-  if(scaled)
-  {
-    glPushMatrix;
-    glScalef(Scale.x, Scale.y, Scale.z);
-  }
-  glColor3d(Color.x, Color.y, Color.z);
+  glColor3f(0.0, 0.0, 0.0);
 
-  if(!Wire)
-    glutSolidSphere(Params.x, Params.y, Params.z);
-  else
-    glutWireSphere(Params.x, Params.y, Params.z);
 
-  if(scaled)
-    glPopMatrix;
+  glutSolidSphere(CYLINDER_RADIUS, 20, 20);
 }
 
 /* Collision testing, sphere and cube
@@ -128,4 +72,31 @@ bool Sphere::collidesWithBlock(Block & b, bool test)
 	return true;
   else
 	return false;
+}
+
+// calculate the initial velocity vector for the sphere to collide with the block
+// we will assume there is an update every 10ms and collision occurs in 1.5 seconds.
+// assume a gravity constant
+void Sphere::calcInitialVelocity(Block & b) {
+	float gravity = -.0001;	  // this will be a const value declared elsewhere
+	float updates = 500;    // number of updates to occur before collision, 1.5 seconds/ update frequency
+
+	float maxGravity = gravity*updates; // the gravitational effect at the time of collision
+
+	// the sphere location with the middle of the box's top surface as the origin
+	// the vector3 is the offset from the center of the block to the center of the top
+	Vector3 sphereCenterRelBox = Center - (b.center + Vector3(0,2,0)); 
+
+	// if the sphere traveled in a straight line, this is w/o gravitation effect
+	Vector3 velocityWithoutGravity = Vector3(sphereCenterRelBox[0]/updates, 
+											sphereCenterRelBox[1]/updates, 
+											sphereCenterRelBox[2]/updates);
+
+	// convert line into a curve to change y velocity to take into account gravity
+	Vector3 velocityWithGravity = Vector3(velocityWithoutGravity[0], 
+										velocityWithoutGravity[1] - maxGravity/2.0, 
+										velocityWithoutGravity[2]);
+
+	Velocity = velocityWithGravity;
+
 }

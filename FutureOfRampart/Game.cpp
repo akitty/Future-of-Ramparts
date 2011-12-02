@@ -49,13 +49,17 @@ Vector3 eye;
 /* James test code */
 /*********************/
 bool intersect = false;
-Matrix4 m;
+Matrix4 cannonball;
+MatrixTransform cannonball_trans;
+MatrixTransform block_trans;
+Matrix4 block_mat;
 MatrixTransform mat;
-Sphere s = Sphere(Vector3(1.0, 20, 20), Vector3(1.0, 1.0, 1.0), Vector3(-10.0, 0, 0), Vector3(.01, .072, 0));
 Block b;
 Cannon c;
-const float gravity = -.0001;
+Sphere s;
+const float gravity = -.0001;;
 bool stop = false;
+bool fire = false;
 
 float xincre = 0.0; bool xrot = false;
 float yincre = 0.0; bool yrot = false;
@@ -78,11 +82,19 @@ MatrixTransform tosurface = MatrixTransform(tran);
 #pragma region GAME_PROTOTYPES
 
 void update(int value);
-bool collidesWith(Sphere s, Block b, bool test);
+void updateVelocity(Sphere & s);
 
 #pragma endregion
 
 #pragma region GAME_HANDLE_INPUT
+
+void updateVelocity(Sphere & s)
+{
+	s.Velocity = Vector3(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
+	s.Center = s.Center + s.Velocity;
+	cannonball.translate(s.Center);
+	cannonball_trans.setTransformation(cannonball);
+}
 
 /**
  * Some keyboard routines to handle turning the spot and point lights
@@ -95,27 +107,15 @@ void handleInput(unsigned char key, int, int)
   //Player2.handleInput(key);
   if(key == 'k')
   {
-	if(!isExploding) {
-    explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
-    isExploding = true;
-    world.addChild(explosion);
-    //gameMap->player1.addChild(explosion);
-	}
+	  if(!isExploding)
+	  {
+		  explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
+		  isExploding = true;
+		  world.addChild(explosion);
+	  }
   }
   /* James test code */
   /*********************/
-  if(key == 'r')
-  {
-	  intersect = false;
-	  s.Velocity.set(.01, .072, 0);
-	  stop = false;
-	  s.Center.set(-10, 0, 0);
-  }
-  if(key == 'c')
-  {
-	  stop = true;
-	  s.Velocity.set(0,0,0);
-  }
   // x
   if(key == 'b')
   {
@@ -131,18 +131,13 @@ void handleInput(unsigned char key, int, int)
   {
 	zrot = !zrot;
   }
-  /*
-  // create block
-  if(key == 'o')
+  // fire cannonball
+  if(key == 'f')
   {
-	block();
+	  fire = !fire;
   }
-  // place block
-  if(key == 'p')
-  {
-	zrot = !zrot;
-  }
-  */
+
+
   /*********************/
 }
 
@@ -153,8 +148,23 @@ void handleInput(unsigned char key, int, int)
 /* initialize the scene graph for the game */
 void initializeMap()
 {
-  gameMap = new Map(textureNums);
-  world.addChild(gameMap);
+//  gameMap = new Map(textureNums);
+//  world.addChild(gameMap);
+  block_mat.translate(5, 0, 20);
+  block_trans.setTransformation(block_mat);
+
+  world.addChild(&rotate_trans);
+  rotate_trans.addChild(&c);
+  s = c.fire();
+  cannonball.translate(s.Center);
+  cannonball_trans.setTransformation(cannonball);
+  rotate_trans.addChild(&cannonball_trans);
+  rotate_trans.addChild(&block_trans);
+  block_trans.addChild(&b);
+  cannonball_trans.addChild(&s);
+
+  s.calcInitialVelocity(b);
+  b.center = b.center + Vector3(5, 0, 20);
 
 }
 
@@ -220,8 +230,8 @@ void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
   eye.x = 0.0f;
-  eye.y = 50.0f;
-  eye.z = 30.0f; 
+  eye.y = 40.0f;
+  eye.z = 40.0f; 
 }
 
 void initializeCamera()
@@ -239,7 +249,7 @@ void Window::idleCallback()
   // UPDATE - HANDLE GAME LOGIC HERE BEFORE CALLING DRAW AGAIN
 /* James test code */
 /*********************/
-
+/*
  if(s.collidesWithBlock(b, false)) {
 	  if (!intersect) {
 		  //cout << "interesection! \n";
@@ -248,7 +258,7 @@ void Window::idleCallback()
 		  
 	  }
   } 
-
+*/
 	if(xrot) xincre+=amount;
 	if(yrot) yincre+=amount;
 	if(zrot) zincre+=amount;
@@ -268,16 +278,11 @@ void Window::idleCallback()
 
 	rotate_trans.setTransformation(rotate_matrix);
 
-
-
+	if(fire) updateVelocity(s);
 
 
 //  if(!stop) cout << s.Center << "\n";
 
-  m.translate(s.Center);
-  mat.setTransformation(m);
-  s.Velocity.set(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
-  s.Center = s.Center + s.Velocity;
 /*********************/
   
 
@@ -293,7 +298,7 @@ void Window::displayCallback()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // rotate camera
-  worldMatrix.multiply(eye);
+  //worldMatrix.multiply(eye);
   // set the new look-at point
   gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
@@ -302,8 +307,6 @@ void Window::displayCallback()
 
   clock_t before = clock();
 
-  // game scene graph
-  worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
