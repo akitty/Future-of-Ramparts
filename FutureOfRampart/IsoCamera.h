@@ -19,7 +19,7 @@ class IsoCamera
 		{
 			rotatePosY.rotatey(90.0f);		// rotates along y axis 90 degrees
 			rotateNegY.rotatey(-90.0f);		// rotates along y axis -90 degrees
-      isometer.rotatey(45.0f);
+			isometer.rotatey(-45.0f);
 			xPosTran.translate(1.0,0.0,0.0);	// an x translation of 1
 			xNegTran.translate(-1.0,0.0,0.0); // an x translation of -1
 			zPosTran.translate(0.0,0.0,1.0);	// a z translation of 1
@@ -87,7 +87,6 @@ class IsoCamera
 
 		inline void handleInput(unsigned char key, int, int) 
 		{
-      cout << key << endl;
 			// x pos
 			if(key == 'd') translatePosX();
 			// x neg

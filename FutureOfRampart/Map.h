@@ -4,8 +4,8 @@
 #include "Block.h"
 #include "Sphere.h"
 
-const int MAP_WIDTH = 20;
-const int MAP_HEIGHT = 48;
+const int MAP_WIDTH = 26;
+const int MAP_HEIGHT = 52;
 
 /**
  * The map containing the base world, each player's

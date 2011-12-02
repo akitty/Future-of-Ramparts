@@ -79,10 +79,12 @@ void handleInput(unsigned char key, int, int)
   //Player2.handleInput(key);
   if(key == 'k')
   {
-    explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
-    isExploding = true;
-    world.addChild(explosion);
-    //gameMap->player1.addChild(explosion);
+	  if(!isExploding)
+	  {
+		  explosion = new Explosion(Vector3(2.0, 2.0, 2.0));
+		  isExploding = true;
+		  world.addChild(explosion);
+	  }
   }
   /* James test code */
   /*********************/
@@ -183,8 +185,8 @@ void Window::setPerspective()
 {
   gluPerspective(45,1,1,200);
   eye.x = 0.0f;
-  eye.y = 50.0f;
-  eye.z = 30.0f; 
+  eye.y = 40.0f;
+  eye.z = 40.0f; 
 }
 
 void initializeCamera()
@@ -233,7 +235,7 @@ void Window::displayCallback()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // rotate camera
-  worldMatrix.multiply(eye);
+  //worldMatrix.multiply(eye);
   // set the new look-at point
   gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
@@ -242,8 +244,6 @@ void Window::displayCallback()
 
   clock_t before = clock();
 
-  // game scene graph
-  worldMatrix.identity();
   world.draw(worldMatrix);
 
   if(isExploding)
