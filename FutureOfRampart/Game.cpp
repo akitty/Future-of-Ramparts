@@ -51,6 +51,7 @@ Vector3 eye;
 
 /* James test code */
 /*********************/
+/*
 bool intersect = false;
 Matrix4 cannonball;
 MatrixTransform cannonball_trans;
@@ -78,6 +79,7 @@ MatrixTransform rotate_trans;
 
 Matrix4 tran;
 MatrixTransform tosurface = MatrixTransform(tran);
+*/
 /*********************/
 
 #pragma endregion
@@ -91,6 +93,7 @@ void updateVelocity(Sphere & s);
 
 #pragma region GAME_HANDLE_INPUT
 
+/*
 void updateVelocity(Sphere & s)
 {
 	s.Velocity = Vector3(s.Velocity[0], s.Velocity[1] + gravity, s.Velocity[2]);
@@ -98,6 +101,7 @@ void updateVelocity(Sphere & s)
 	cannonball.translate(s.Center);
 	cannonball_trans.setTransformation(cannonball);
 }
+*/
 
 /**
  * Some keyboard routines to handle turning the spot and point lights
@@ -124,6 +128,7 @@ void handleInput(unsigned char key, int, int)
   }
   /* James test code */
   /*********************/
+  /*
   // x
   if(key == 'b')
   {
@@ -144,7 +149,7 @@ void handleInput(unsigned char key, int, int)
   {
 	  fire = !fire;
   }
-
+  */
 
   /*********************/
 }
@@ -156,13 +161,15 @@ void handleInput(unsigned char key, int, int)
 /* initialize the scene graph for the game */
 void initializeMap()
 {
-//  gameMap = new Map(textureNums);
-//  world.addChild(gameMap);
-  block_mat.translate(5, 0, 20);
-  block_trans.setTransformation(block_mat);
+	
+  gameMap = new Map(textureNums);
+  world.addChild(gameMap);
+  
+
+  
   testBlock = new Block(Vector3(4.0f, BLOCK_SIZE, 4.0f), BLOCK_TOP, BLOCK_FRONT, BLOCK_BACK, BLOCK_LEFT, BLOCK_RIGHT, BLOCK_RIGHT, false);
   world.addChild(testBlock);
-
+ 
    char keys[6];
 
 
@@ -175,6 +182,12 @@ void initializeMap()
   player1 = new Player(4, 4, -10, 10, -10, 10, keys, MAP_TOP_P1);
   if(player1 != NULL)
 	world.addChild(player1);
+  
+
+  /*
+  block_mat.translate(5, 0, 20);
+  block_trans.setTransformation(block_mat);
+  
   world.addChild(&rotate_trans);
   rotate_trans.addChild(&c);
   s = c.fire();
@@ -187,7 +200,8 @@ void initializeMap()
 
   s.calcInitialVelocity(b);
   b.center = b.center + Vector3(5, 0, 20);
-
+  */
+  
 }
 
 /* Load all of the assets associated with this game
@@ -281,6 +295,7 @@ void Window::idleCallback()
 	  }
   } 
 */
+	/*
 	if(xrot) xincre+=amount;
 	if(yrot) yincre+=amount;
 	if(zrot) zincre+=amount;
@@ -301,7 +316,7 @@ void Window::idleCallback()
 	rotate_trans.setTransformation(rotate_matrix);
 
 	if(fire) updateVelocity(s);
-
+	*/
 
 //  if(!stop) cout << s.Center << "\n";
 

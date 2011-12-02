@@ -18,7 +18,7 @@ class Cannon : public Geode
 	// the center parameter represents the corner of the grid space (make sure which corner)
 	// need to figure out how to perfectly center the cannon with the grid
 	// can easily force the x space to be 4, we know all the values that determine it, the other components don't need to be modified
-	Cannon(Vector3 center = Vector3(0.0,0.0,0.0), Player1 = true);
+	Cannon(Vector3 center = Vector3(0.0,0.0,0.0));
 
 	// return a sphere with its center as the initial position
 	Sphere fire();
